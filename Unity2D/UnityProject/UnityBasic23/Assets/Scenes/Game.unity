@@ -946,6 +946,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 897c5b67c85fa224fae131d44f020e49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  JumpPower: 200
+  isGround: 0
 --- !u!50 &615071468
 Rigidbody2D:
   serializedVersion: 4
