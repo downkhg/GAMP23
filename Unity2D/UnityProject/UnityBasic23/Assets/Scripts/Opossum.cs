@@ -15,4 +15,10 @@ public class Opossum : MonoBehaviour
     {
         transform.position += Vector3.left * Time.deltaTime;
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Player")
+            Destroy(collision.gameObject);
+    }
 }
