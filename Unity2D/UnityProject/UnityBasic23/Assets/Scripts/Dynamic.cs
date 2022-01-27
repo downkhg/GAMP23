@@ -8,6 +8,7 @@ public class Dynamic : MonoBehaviour
     public float JumpPower;
     public bool isGround;
     public int Score;
+    public Gun gun;
 
     private void OnGUI()
     {
@@ -43,6 +44,11 @@ public class Dynamic : MonoBehaviour
                 rigidbody.AddForce(Vector3.up * JumpPower);
                 isGround = false;
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            gun.Shot();
         }
     }
 
