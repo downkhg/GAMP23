@@ -9,6 +9,7 @@ public class Dynamic : MonoBehaviour
     public bool isGround;
     public int Score;
     public Gun gun;
+    public Transform transResponPoint;
 
     private void OnGUI()
     {
@@ -66,6 +67,15 @@ public class Dynamic : MonoBehaviour
         {
             Score++;
             Destroy(collision.gameObject);
+        }
+
+        if(collision.gameObject.name == "DeadZone")
+        {
+            Destroy(collision.gameObject);
+            GameObject prefab = Resources.Load("Prefabs/" + this.name) as GameObject;
+            GameObject obj = Instantiate(prefab, transResponPoint.position, Quaternion.identity);
+            obj.name = this.name;
+            obj.GetComponent<Dynamic>().transResponPoint = transResponPoint;
         }
     }
 }

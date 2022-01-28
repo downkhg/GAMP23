@@ -16,7 +16,6 @@ public class Bullet : MonoBehaviour
     private void Update()
     {
         Vector3 vPos = this.transform.position;
-
         float fDist = Vector3.Distance(vStartPos, vPos);
 
         if (fDist > Dist)
