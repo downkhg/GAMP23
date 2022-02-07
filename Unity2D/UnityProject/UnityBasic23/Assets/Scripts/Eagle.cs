@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Eagle : MonoBehaviour
+class Eagle : MonoBehaviour
 {
     public GameObject objTarget;
+    public float Speed = 1;
     
     // Start is called before the first frame update
     void Start()
@@ -24,7 +25,13 @@ public class Eagle : MonoBehaviour
             float fDist = vDist.magnitude;
 
             if(fDist > Time.deltaTime)
-                transform.position += vDir * Time.deltaTime;
+                transform.position += vDir * Speed * Time.deltaTime;
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(objTarget.tag == "Player")
+            objTarget = collision.gameObject;
     }
 }
