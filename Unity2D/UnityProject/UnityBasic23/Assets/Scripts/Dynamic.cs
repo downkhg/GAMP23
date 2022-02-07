@@ -11,6 +11,11 @@ public class Dynamic : MonoBehaviour
     public Gun gun;
     public Transform transResponPoint;
 
+    public bool isLodder;
+    public bool isGravity;
+
+    public Rigidbody2D rigidbody2D;
+
     private void OnGUI()
     {
         GUI.Box(new Rect(0, 0, 100, 20), "Score:" + Score);
@@ -19,17 +24,29 @@ public class Dynamic : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
-    {   
+    {
         if (Input.GetKey(KeyCode.RightArrow))
+        {
             transform.position += Vector3.right * Speed * Time.deltaTime;
+            isGravity = false;
+        }
 
         if (Input.GetKey(KeyCode.LeftArrow))
+        {
             transform.position += Vector3.left * Speed * Time.deltaTime;
+            isGravity = false;
+        }
+
+        if(isLodder && (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow)))
+        {
+            isGravity = true;
+            rigidbody2D.gravityScale = 0;
+        }
 
         //if (Input.GetKey(KeyCode.Space))
         //    transform.position += Vector3.up * 3 * Time.deltaTime;
@@ -41,8 +58,7 @@ public class Dynamic : MonoBehaviour
         {
             if (isGround == true)
             {
-                Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
-                rigidbody.AddForce(Vector3.up * JumpPower);
+                rigidbody2D.AddForce(Vector3.up * JumpPower);
                 isGround = false;
             }
         }
@@ -50,6 +66,17 @@ public class Dynamic : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.X))
         {
             gun.Shot();
+        }
+
+        if(isGravity)
+        {
+            rigidbody2D.velocity = Vector2.zero;
+
+            if (Input.GetKey(KeyCode.UpArrow))
+                transform.position += Vector3.up * Speed * Time.deltaTime;
+
+            if (Input.GetKey(KeyCode.DownArrow))
+                transform.position += Vector3.down * Speed * Time.deltaTime;
         }
     }
 
@@ -76,6 +103,32 @@ public class Dynamic : MonoBehaviour
             GameObject obj = Instantiate(prefab, transResponPoint.position, Quaternion.identity);
             obj.name = this.name;
             obj.GetComponent<Dynamic>().transResponPoint = transResponPoint;
+        }
+
+        if(collision.gameObject.name == "Lodder")
+        {
+           
+            rigidbody2D.velocity = Vector2.zero;
+            isLodder = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.name == "Lodder")
+        {
+            rigidbody2D.gravityScale = 1;
+            rigidbody2D.velocity = Vector2.zero;
+            isLodder = false;
+            
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.name == "Lodder")
+        {
+            isLodder = true;
         }
     }
 }

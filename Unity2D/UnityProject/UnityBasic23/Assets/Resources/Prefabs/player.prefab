@@ -133,6 +133,9 @@ MonoBehaviour:
   isGround: 0
   Score: 0
   gun: {fileID: 685367026650419198}
+  transResponPoint: {fileID: 0}
+  isLodder: 0
+  rigidbody2D: {fileID: 0}
 --- !u!50 &685367025933185475
 Rigidbody2D:
   serializedVersion: 4
@@ -167,9 +170,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.011323884, y: -0.05410395}
   serializedVersion: 2
-  m_Radius: 0.165
+  m_Radius: 0.0920228
 --- !u!114 &685367025933185473
 MonoBehaviour:
   m_ObjectHideFlags: 0
