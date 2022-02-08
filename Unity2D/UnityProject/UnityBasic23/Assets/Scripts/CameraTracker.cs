@@ -28,5 +28,7 @@ public class CameraTracker : MonoBehaviour
             if (fDist > Time.deltaTime)
                 transform.position += vDir * Speed * Time.deltaTime;
         }
+        //else objTarget = GameObject.FindWithTag("Player");
+        //사용은 가능하지만 권장되는 방법은 아님.
     }
 }

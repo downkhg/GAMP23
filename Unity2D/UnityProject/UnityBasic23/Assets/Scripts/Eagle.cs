@@ -6,12 +6,41 @@ class Eagle : MonoBehaviour
 {
     public GameObject objTarget;
     public float Speed = 1;
-    
-    // Start is called before the first frame update
-    void Start()
+    public float Site = 0.5f;
+
+    private void OnDrawGizmos()
     {
-        
+        Gizmos.DrawWireSphere(this.transform.position, Site);
     }
+
+    //private void FixedUpdate()
+    //{
+    //    Vector3 vPos = this.transform.position;
+    //    Collider2D[] colliders =
+    //        Physics2D.OverlapCircleAll(vPos, Site);
+
+    //    for (int i = 0; i < colliders.Length; i++)
+    //    {
+    //        Collider2D collider = colliders[i];
+    //        Debug.Log(i+":"+collider.name);
+    //        if (collider.tag == "Player")
+    //            objTarget = collider.gameObject;
+    //    }
+    //}
+
+    private void FixedUpdate()
+    {
+        int nLayer = 1 << LayerMask.NameToLayer("Player");
+        Vector3 vPos = this.transform.position;
+        Collider2D collider =
+            Physics2D.OverlapCircle(vPos, Site, nLayer);
+
+        if (collider)
+        {
+            objTarget = collider.gameObject;
+        }
+    }
+
 
     // Update is called once per frame
     void Update()

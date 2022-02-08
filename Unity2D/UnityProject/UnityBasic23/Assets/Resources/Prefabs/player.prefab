@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 685367025933185475}
   - component: {fileID: 685367025933185474}
   - component: {fileID: 685367025933185473}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -135,6 +135,7 @@ MonoBehaviour:
   gun: {fileID: 685367026650419198}
   transResponPoint: {fileID: 0}
   isLodder: 0
+  isGravity: 0
   rigidbody2D: {fileID: 0}
 --- !u!50 &685367025933185475
 Rigidbody2D:
