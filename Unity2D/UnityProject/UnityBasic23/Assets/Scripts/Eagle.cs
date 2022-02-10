@@ -8,6 +8,8 @@ class Eagle : MonoBehaviour
     public float Speed = 1;
     public float Site = 0.5f;
 
+    public GameObject objResponPoint;
+
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(this.transform.position, Site);
@@ -35,6 +37,14 @@ class Eagle : MonoBehaviour
     void Update()
     {
         MoveProcess();
+        ReturnProcess();
+    }
+    void ReturnProcess()
+    {
+        if (objTarget == null)
+        {
+            objTarget = objResponPoint;
+        }
     }
     void FindProcess()
     {
@@ -50,7 +60,7 @@ class Eagle : MonoBehaviour
     }
     void MoveProcess()
     {
-        if (objTarget)
+        if (objTarget != null)
         {
             Vector3 vTaqrget = objTarget.transform.position;
             Vector3 vPos = this.transform.position;

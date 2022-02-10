@@ -2838,6 +2838,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: eagle
       objectReference: {fileID: 0}
+    - target: {fileID: 8636615130445554576, guid: fdb0899bf3a9b294793fe18496ef4dbc,
+        type: 3}
+      propertyPath: objTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8636615130445554576, guid: fdb0899bf3a9b294793fe18496ef4dbc,
+        type: 3}
+      propertyPath: objResponPoint
+      value: 
+      objectReference: {fileID: 1285778014}
     - target: {fileID: 8636615130445554577, guid: fdb0899bf3a9b294793fe18496ef4dbc,
         type: 3}
       propertyPath: m_RootOrder
