@@ -14,6 +14,8 @@ public class Dynamic : MonoBehaviour
     public bool isLodder;
     public bool isGravity;
 
+    public Vector3 vDir;
+
     public Rigidbody2D rigidbody2D;
 
     private void OnGUI()
@@ -30,16 +32,26 @@ public class Dynamic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            gun.Shot(vDir);
+        }
+
         if (Input.GetKey(KeyCode.RightArrow))
         {
             transform.position += Vector3.right * Speed * Time.deltaTime;
+            transform.localRotation = Quaternion.Euler(0, 0, 0);
             isGravity = false;
+            vDir = Vector3.right;
         }
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             transform.position += Vector3.left * Speed * Time.deltaTime;
+            transform.localRotation = Quaternion.Euler(0, 180, 0);
             isGravity = false;
+            vDir = Vector3.left;
         }
 
         if(isLodder && (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow)))
@@ -47,14 +59,15 @@ public class Dynamic : MonoBehaviour
             isGravity = true;
             rigidbody2D.gravityScale = 0;
         }
-
-        //if (Input.GetKey(KeyCode.Space))
-        //    transform.position += Vector3.up * 3 * Time.deltaTime;
-        //스페이스키를 눌렀을때 점프
-        //점프: 위로 힘을 가해서 올라가다 떨어지는것
-        //발판이있어야 점프가 가능하다 -> 땅에 서있을때 점프가 가능하다.
-        //점프중일때는 점프가 되지않아야한다.
-        if(Input.GetKeyDown(KeyCode.Space))
+        /*
+        if (Input.GetKey(KeyCode.Space))
+            transform.position += Vector3.up * 3 * Time.deltaTime;
+        스페이스키를 눌렀을때 점프
+        점프: 위로 힘을 가해서 올라가다 떨어지는것
+        발판이있어야 점프가 가능하다 -> 땅에 서있을때 점프가 가능하다.
+        점프중일때는 점프가 되지않아야한다.
+        */
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             if (isGround == true)
             {
@@ -63,10 +76,6 @@ public class Dynamic : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            gun.Shot();
-        }
 
         if(isGravity)
         {

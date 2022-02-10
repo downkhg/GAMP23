@@ -2677,12 +2677,22 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 685367025933185476, guid: 21c2456f91dc1a34c9e382e525ec9b3c,
         type: 3}
+      propertyPath: vDir.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 685367025933185476, guid: 21c2456f91dc1a34c9e382e525ec9b3c,
+        type: 3}
       propertyPath: transResponPoint
       value: 
       objectReference: {fileID: 854813522}
     - target: {fileID: 685367025933185477, guid: 21c2456f91dc1a34c9e382e525ec9b3c,
         type: 3}
       propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 685367025933185477, guid: 21c2456f91dc1a34c9e382e525ec9b3c,
+        type: 3}
+      propertyPath: m_LocalScale.x
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 685367025933185477, guid: 21c2456f91dc1a34c9e382e525ec9b3c,
@@ -2733,6 +2743,11 @@ PrefabInstance:
     - target: {fileID: 685367025933185477, guid: 21c2456f91dc1a34c9e382e525ec9b3c,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 685367025933185478, guid: 21c2456f91dc1a34c9e382e525ec9b3c,
+        type: 3}
+      propertyPath: m_FlipX
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 685367025933185479, guid: 21c2456f91dc1a34c9e382e525ec9b3c,

@@ -30,6 +30,14 @@ class Eagle : MonoBehaviour
 
     private void FixedUpdate()
     {
+        FindProcess();
+    }
+    void Update()
+    {
+        MoveProcess();
+    }
+    void FindProcess()
+    {
         int nLayer = 1 << LayerMask.NameToLayer("Player");
         Vector3 vPos = this.transform.position;
         Collider2D collider =
@@ -40,10 +48,7 @@ class Eagle : MonoBehaviour
             objTarget = collider.gameObject;
         }
     }
-
-
-    // Update is called once per frame
-    void Update()
+    void MoveProcess()
     {
         if (objTarget)
         {
@@ -53,14 +58,8 @@ class Eagle : MonoBehaviour
             Vector3 vDir = vDist.normalized;
             float fDist = vDist.magnitude;
 
-            if(fDist > Time.deltaTime)
+            if (fDist > Time.deltaTime)
                 transform.position += vDir * Speed * Time.deltaTime;
         }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(objTarget.tag == "Player")
-            objTarget = collision.gameObject;
     }
 }
