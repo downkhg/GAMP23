@@ -7,8 +7,10 @@ class Eagle : MonoBehaviour
     public GameObject objTarget;
     public float Speed = 1;
     public float Site = 0.5f;
+    public bool isMove = false;
 
     public GameObject objResponPoint;
+    public GameObject objPatrolPoint;
 
     private void OnDrawGizmos()
     {
@@ -38,6 +40,18 @@ class Eagle : MonoBehaviour
     {
         MoveProcess();
         ReturnProcess();
+
+        if(isArrival())
+        {
+            if(objTarget.name == objResponPoint.name)
+            {
+                objTarget = objPatrolPoint;
+            }
+            else if (objTarget.name == objPatrolPoint.name)
+            {
+                objTarget = objResponPoint;
+            }
+        }
     }
     void ReturnProcess()
     {
@@ -69,7 +83,16 @@ class Eagle : MonoBehaviour
             float fDist = vDist.magnitude;
 
             if (fDist > Time.deltaTime)
+            {
                 transform.position += vDir * Speed * Time.deltaTime;
+                isMove = true;
+            }
+            else isMove = false;
         }
+    }
+
+    public bool isArrival()
+    {
+        return !isMove;
     }
 }

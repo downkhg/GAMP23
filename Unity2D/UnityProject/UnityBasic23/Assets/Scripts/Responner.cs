@@ -35,10 +35,19 @@ public class Responner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(objPlayer == null && isRespon == false)
+        if(objPlayer == null)
         {
-            //objPlayer = ResponObject();
-            StartCoroutine(ProcessTime(time));
+            if (isRespon == false)
+            {
+                //objPlayer = ResponObject();
+                StartCoroutine(ProcessTime(time));
+            }
         }
+        //else //독수리에게만 필요한 코드이므로 리스폰에 있는것은 부적절하다. 
+        //{
+        //    Eagle eagle = objPlayer.GetComponent<Eagle>();
+        //    if(eagle)
+        //        eagle.objResponPoint = this.gameObject;
+        //}
     }
 }

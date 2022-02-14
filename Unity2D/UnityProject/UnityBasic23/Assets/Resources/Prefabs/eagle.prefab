@@ -98,6 +98,8 @@ MonoBehaviour:
   objTarget: {fileID: 0}
   Speed: 1
   Site: 0.5
+  objResponPoint: {fileID: 6339249438361087552, guid: 52d69928adb334248a29f39be4c0d7c6,
+    type: 3}
 --- !u!58 &8636615130445554579
 CircleCollider2D:
   m_ObjectHideFlags: 0
