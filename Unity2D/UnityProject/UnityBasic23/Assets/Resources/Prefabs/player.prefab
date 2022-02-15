@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 685367025933185476}
   - component: {fileID: 685367025933185475}
   - component: {fileID: 685367025933185474}
+  - component: {fileID: 6663062569583712081}
   - component: {fileID: 685367025933185473}
   m_Layer: 8
   m_Name: player
@@ -136,6 +137,7 @@ MonoBehaviour:
   transResponPoint: {fileID: 0}
   isLodder: 0
   isGravity: 0
+  vDir: {x: 0, y: 0, z: 0}
   rigidbody2D: {fileID: 0}
 --- !u!50 &685367025933185475
 Rigidbody2D:
@@ -174,6 +176,21 @@ CircleCollider2D:
   m_Offset: {x: -0.011323884, y: -0.05410395}
   serializedVersion: 2
   m_Radius: 0.0920228
+--- !u!114 &6663062569583712081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 685367025933185479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e7a4d9e6720bac4b8ed3916beaaafb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nAttack: 10
+  nHP: 100
+  idx: 0
 --- !u!114 &685367025933185473
 MonoBehaviour:
   m_ObjectHideFlags: 0
