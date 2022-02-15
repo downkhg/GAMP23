@@ -1121,6 +1121,7 @@ MonoBehaviour:
   cameraTracker: {fileID: 84119254}
   responnerPlayer: {fileID: 854813523}
   responnerEagle: {fileID: 0}
+  responnerOpposum: {fileID: 0}
 --- !u!4 &421362117
 Transform:
   m_ObjectHideFlags: 0
@@ -2940,12 +2941,12 @@ PrefabInstance:
     - target: {fileID: 8636615130445554577, guid: fdb0899bf3a9b294793fe18496ef4dbc,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.61
+      value: -7.019
       objectReference: {fileID: 0}
     - target: {fileID: 8636615130445554577, guid: fdb0899bf3a9b294793fe18496ef4dbc,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.24
+      value: 3.639
       objectReference: {fileID: 0}
     - target: {fileID: 8636615130445554577, guid: fdb0899bf3a9b294793fe18496ef4dbc,
         type: 3}

@@ -12,6 +12,48 @@ class Eagle : MonoBehaviour
     public GameObject objResponPoint;
     public GameObject objPatrolPoint;
 
+    public enum E_AI_STATUS { TRACKING, RETURN, PATROL}
+    public E_AI_STATUS curAIState;
+
+    private void Awake()
+    {
+        SetAIStatus(E_AI_STATUS.RETURN);
+    }
+
+    void SetAIStatus(E_AI_STATUS state)
+    {
+        switch(state)
+        {
+            case E_AI_STATUS.TRACKING:
+                break;
+            case E_AI_STATUS.RETURN:
+                objTarget = objResponPoint;
+                break;
+            case E_AI_STATUS.PATROL:
+                objTarget = objPatrolPoint;
+                break;
+        }
+        curAIState = state;
+    }
+
+    void UpdateAIStatus()
+    {
+        switch (curAIState)
+        {
+            case E_AI_STATUS.TRACKING:
+                if (objTarget == null)
+                    SetAIStatus(E_AI_STATUS.RETURN);
+                break;
+            case E_AI_STATUS.RETURN:
+                if (isArrival())
+                    SetAIStatus(E_AI_STATUS.PATROL);
+                break;
+            case E_AI_STATUS.PATROL:
+                PatrolProcess();
+                break;
+        }
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(this.transform.position, Site);
@@ -39,11 +81,15 @@ class Eagle : MonoBehaviour
     void Update()
     {
         MoveProcess();
-        ReturnProcess();
-
-        if(isArrival())
+        UpdateAIStatus();
+        //ReturnProcess();
+        //PatrolProcess();
+    }
+    void PatrolProcess()
+    {
+        if (isMove == false)
         {
-            if(objTarget.name == objResponPoint.name)
+            if (objTarget.name == objResponPoint.name)
             {
                 objTarget = objPatrolPoint;
             }
@@ -70,6 +116,7 @@ class Eagle : MonoBehaviour
         if (collider)
         {
             objTarget = collider.gameObject;
+            SetAIStatus(E_AI_STATUS.TRACKING);
         }
     }
     void MoveProcess()
