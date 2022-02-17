@@ -9,6 +9,14 @@ public class GameManager : MonoBehaviour
     public Responner responnerEagle;
     public Responner responnerOpposum;
 
+    static GameManager instance;
+    public static GameManager GetInstance() { return instance; }
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
     // Update is called once per frame
     void Update()
     {

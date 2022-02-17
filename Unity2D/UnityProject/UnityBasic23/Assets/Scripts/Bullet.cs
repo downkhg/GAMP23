@@ -6,6 +6,8 @@ public class Bullet : MonoBehaviour
 {
     public Vector3 vStartPos;
     public float Dist;
+    public Player master;
+
     private void Start()
     {
         //설정한 힘에 따라 사거리가 달라진다.
@@ -27,7 +29,14 @@ public class Bullet : MonoBehaviour
     {
         if (collision.gameObject.tag == "Monster")
         {
-            Destroy(collision.gameObject);
+            //Destroy(collision.gameObject);
+            //Player player = GameObject.Find("player").GetComponent<Player>();
+            //Player player = 
+            //    GameManager.GetInstance().responnerPlayer.objPlayer.GetComponent<Player>();
+            Player player = master;
+            Player target = collision.gameObject.GetComponent<Player>();
+
+            player.Attack(target);
             Destroy(this.gameObject);
         }
     }

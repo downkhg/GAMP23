@@ -77,6 +77,25 @@ class Eagle : MonoBehaviour
     private void FixedUpdate()
     {
         FindProcess();
+        AttackProcess();
+    }
+    void AttackProcess()
+    {
+        CircleCollider2D circleCollider = 
+            this.gameObject.GetComponent<CircleCollider2D>();
+        Vector2 vPos = this.transform.position;
+        Vector2 vCenter = vPos + circleCollider.offset;
+        int nLayer = 1 << LayerMask.NameToLayer("Player");
+        Collider2D collider = 
+            Physics2D.OverlapCircle(vCenter, circleCollider.radius, nLayer);
+
+        if (collider)
+        {
+            Player me = this.GetComponent<Player>();
+            Player target = collider.gameObject.GetComponent<Player>();
+
+            me.Attack(target);
+        }
     }
     void Update()
     {

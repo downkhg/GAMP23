@@ -2849,6 +2849,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: opossum
       objectReference: {fileID: 0}
+    - target: {fileID: 7685772566585251437, guid: f941e6e230d6413408ff70ca2794a1bf,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.3125102
+      objectReference: {fileID: 0}
+    - target: {fileID: 7685772566585251437, guid: f941e6e230d6413408ff70ca2794a1bf,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 0.25750494
+      objectReference: {fileID: 0}
+    - target: {fileID: 7685772566585251437, guid: f941e6e230d6413408ff70ca2794a1bf,
+        type: 3}
+      propertyPath: m_Offset.x
+      value: -0.023744911
+      objectReference: {fileID: 0}
+    - target: {fileID: 7685772566585251437, guid: f941e6e230d6413408ff70ca2794a1bf,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: -0.011247516
+      objectReference: {fileID: 0}
     - target: {fileID: 7685772566585251438, guid: f941e6e230d6413408ff70ca2794a1bf,
         type: 3}
       propertyPath: m_RootOrder
