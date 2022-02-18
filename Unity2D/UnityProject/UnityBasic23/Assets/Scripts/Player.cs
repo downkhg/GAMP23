@@ -6,6 +6,23 @@ public class Player : MonoBehaviour
 {
     public int nAttack;
     public int nHP;
+    public int nLv;
+    public int nExp;
+
+    public void LvUp()
+    {
+        if(nExp >= 100)
+        {
+            nLv++;
+            nAttack += 5;
+            nHP += 5;
+        }
+    }
+
+    public void StillExp(Player target)
+    {
+        nExp += target.nExp + nLv * 100;
+    }
 
     public void Attack(Player target)
     {

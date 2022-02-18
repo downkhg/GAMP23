@@ -25,22 +25,16 @@ public class Opossum : MonoBehaviour
         Collider2D collider = Physics2D.OverlapBox(vCenter, boxCollider.size, 0, nLayer);
         if(collider)
         {
-            Player me = this.GetComponent<Player>();
-            Player target = collider.gameObject.GetComponent<Player>();
+            SuperMode superMode = collider.GetComponent<SuperMode>();
 
-            me.Attack(target);
-        }
-    }
+            if (superMode != null && superMode.isUse == false)
+            {
+                Player me = this.GetComponent<Player>();
+                Player target = collider.gameObject.GetComponent<Player>();
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            //Destroy(collision.gameObject);
-            Player me = this.GetComponent<Player>();
-            Player target = collision.gameObject.GetComponent<Player>();
-
-            me.Attack(target);
+                me.Attack(target);
+                superMode.Active();
+            }
         }
     }
 }
