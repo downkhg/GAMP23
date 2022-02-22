@@ -44,9 +44,14 @@ public class Player : MonoBehaviour
     private void OnGUI()
     {
         int w = 100, h = 20;
-        
         GUI.Box(new Rect(w * idx,0,w,h),"###" + this.gameObject.name + "###");
         GUI.Box(new Rect(w * idx, 20, w, h), "HP:" + nHP);
         GUI.Box(new Rect(w * idx, 40, w, h), "Atk:" + nAttack);
+    }
+
+    private void Update()
+    {
+        if (Death()) Destroy(this.gameObject);
+        LvUp();
     }
 }

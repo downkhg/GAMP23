@@ -29,15 +29,18 @@ public class Bullet : MonoBehaviour
     {
         if (collision.gameObject.tag == "Monster")
         {
-            //Destroy(collision.gameObject);
-            //Player player = GameObject.Find("player").GetComponent<Player>();
-            //Player player = 
-            //    GameManager.GetInstance().responnerPlayer.objPlayer.GetComponent<Player>();
-            Player player = master;
-            Player target = collision.gameObject.GetComponent<Player>();
+            SuperMode superMode = collision.GetComponent<SuperMode>();
 
-            player.Attack(target);
-            Destroy(this.gameObject);
+            if (superMode != null && superMode.isUse == false)
+            {
+                Player me = this.GetComponent<Player>();
+                Player target = collision.gameObject.GetComponent<Player>();
+
+                me.Attack(target);
+                superMode.Active();
+
+                if (target.Death()) me.StillExp(target);
+            }
         }
     }
 }
