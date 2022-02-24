@@ -33,7 +33,8 @@ public class Bullet : MonoBehaviour
 
             if (superMode != null && superMode.isUse == false)
             {
-                Player me = this.GetComponent<Player>();
+                //Player me = GameManager.GetInstance().responnerPlayer.objPlayer.GetComponent<Player>();
+                Player me = master;
                 Player target = collision.gameObject.GetComponent<Player>();
 
                 me.Attack(target);

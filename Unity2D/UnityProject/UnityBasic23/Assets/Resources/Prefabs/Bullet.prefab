@@ -134,4 +134,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vStartPos: {x: 0, y: 0, z: 0}
-  Dist: 0.5
+  Dist: 1
+  master: {fileID: 0}

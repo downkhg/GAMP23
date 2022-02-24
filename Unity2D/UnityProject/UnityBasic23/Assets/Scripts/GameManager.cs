@@ -13,7 +13,9 @@ public class GameManager : MonoBehaviour
     public enum E_GUI_STATE { TITLE, THEEND, GAMEOVER, PLAY }
     public E_GUI_STATE curGUIState;
 
-    void ShowSecene(E_GUI_STATE state)
+    public GUIPlayerInfo guiPlayerInfo;
+
+    public void ShowSecene(E_GUI_STATE state)
     {
         for (int i = 0; i < listGUIScene.Count; i++)
         {
@@ -23,24 +25,28 @@ public class GameManager : MonoBehaviour
                 listGUIScene[i].SetActive(false);
         }
     }
-    void SetGUIStatus(E_GUI_STATE state)
+    public void SetGUIStatus(E_GUI_STATE state)
     {
         switch(state)
         {
             case E_GUI_STATE.TITLE:
+                Time.timeScale = 0;
                 break;
             case E_GUI_STATE.THEEND:
+                Time.timeScale = 0;
                 break;
             case E_GUI_STATE.GAMEOVER:
+                Time.timeScale = 0;
                 break;
             case E_GUI_STATE.PLAY:
+                Time.timeScale = 1;
                 break;
         }
         ShowSecene(state);
         curGUIState = state;
     }
 
-    void UpdateGUIStatus()
+    public void UpdateGUIStatus()
     {
         switch (curGUIState)
         {
@@ -51,6 +57,10 @@ public class GameManager : MonoBehaviour
             case E_GUI_STATE.GAMEOVER:
                 break;
             case E_GUI_STATE.PLAY:
+                guiPlayerInfo.Set(responnerPlayer.objPlayer);
+                EventGameOver();
+                EventCameraTargetFixed();
+                EventEaglePonstFixed();
                 break;
         }
     }
@@ -67,9 +77,15 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        EventCameraTargetFixed();
-        EventEaglePonstFixed();
         UpdateGUIStatus();
+    }
+
+    public void EventGameOver()
+    {
+        if (responnerPlayer.objPlayer == null)
+        {
+            SetGUIStatus(E_GUI_STATE.GAMEOVER);
+        }
     }
 
     public void EventGUISceneChage(int idx)
@@ -97,4 +113,6 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+   
 }

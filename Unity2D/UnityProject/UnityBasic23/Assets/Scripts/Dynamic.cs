@@ -18,10 +18,10 @@ public class Dynamic : MonoBehaviour
 
     public Rigidbody2D rigidbody2D;
 
-    private void OnGUI()
-    {
-        GUI.Box(new Rect(0, 0, 100, 20), "Score:" + Score);
-    }
+    //private void OnGUI()
+    //{
+    //    GUI.Box(new Rect(0, 0, 100, 20), "Score:" + Score);
+    //}
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +36,21 @@ public class Dynamic : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.X))
         {
             gun.Shot(vDir,GetComponent<Player>());
+        }
+
+        if(Input.GetKeyDown(KeyCode.Z))
+        {
+            CircleCollider2D circleCollider = GetComponent<CircleCollider2D>();
+            Vector2 vPos = this.transform.position;
+            Vector2 vCenter = vPos + circleCollider.offset;
+            int nLayer = 1 << LayerMask.NameToLayer("Object");
+            Collider2D collider = 
+                Physics2D.OverlapCircle(vCenter, circleCollider.radius, nLayer);
+
+            if(collider && collider.name == "house")
+            {
+                GameManager.GetInstance().SetGUIStatus(GameManager.E_GUI_STATE.THEEND);
+            }
         }
 
         if (Input.GetKey(KeyCode.RightArrow))

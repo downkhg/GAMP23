@@ -190,6 +190,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nAttack: 10
   nHP: 100
+  nLv: 1
+  nExp: 0
+  nMaxHP: 0
+  guiHPBar: {fileID: 0}
+  guiExpBar: {fileID: 0}
   idx: 0
 --- !u!114 &685367025933185473
 MonoBehaviour:
