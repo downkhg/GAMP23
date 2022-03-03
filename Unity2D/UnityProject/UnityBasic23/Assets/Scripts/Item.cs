@@ -7,32 +7,39 @@ public class Item : MonoBehaviour
     public enum E_ITEM_EFFECT { SUPER, RECOVERY, SCORE, BULLET }
     public E_ITEM_EFFECT eEffect;
 
-    public void Use(GameObject obj)
+    public static bool Use(E_ITEM_EFFECT eff, GameObject targetObject)
     {
-        switch (eEffect)
+        switch (eff)
         {
             case E_ITEM_EFFECT.SUPER:
-                SuperMode superMode = obj.GetComponent<SuperMode>();
-                if(superMode != null)
+                SuperMode superMode = targetObject.GetComponent<SuperMode>();
+                if (superMode != null)
                     superMode.Active();
                 break;
             case E_ITEM_EFFECT.RECOVERY:
-                Player player = obj.GetComponent<Player>();
-                if(player)
+                Player player = targetObject.GetComponent<Player>();
+                if (player)
                     player.nHP = player.nMaxHP;
                 break;
             case E_ITEM_EFFECT.SCORE:
-                Dynamic dynamic = obj.GetComponent<Dynamic>();
+                Dynamic dynamic = targetObject.GetComponent<Dynamic>();
                 if (dynamic)
                     dynamic.Score += 100;
                 break;
             case E_ITEM_EFFECT.BULLET:
                 break;
         }
+        return false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Use(collision.gameObject);
+        if (collision.tag == "Player")
+        {
+            Iventory iventory = collision.gameObject.GetComponent<Iventory>();
+            //Use(eEffect, collision.gameObject);
+            iventory.SetInventory(this);
+            Destroy(gameObject);
+        }
     }
 }

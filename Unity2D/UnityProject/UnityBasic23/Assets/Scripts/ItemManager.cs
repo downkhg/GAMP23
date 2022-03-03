@@ -35,6 +35,11 @@ public class ItemManager : MonoBehaviour
         itemInfos.Add(new ItemInfo("총알", "총알을 1개씩 발사한다.", Item.E_ITEM_EFFECT.BULLET, "bullet", "hit_bullet", "bullet_obj"));
     }
 
+    public ItemInfo GetItemInfo(Item.E_ITEM_EFFECT item_eff)
+    {
+        return itemInfos[(int)item_eff];
+    }
+
     private void Awake()
     {
         Initialize();

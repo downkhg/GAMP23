@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     public Responner responnerEagle;
     public Responner responnerOpposum;
 
+    public ItemManager itemManager;
+
     public List<GameObject> listGUIScene;
     public enum E_GUI_STATE { TITLE, THEEND, GAMEOVER, PLAY }
     public E_GUI_STATE curGUIState;

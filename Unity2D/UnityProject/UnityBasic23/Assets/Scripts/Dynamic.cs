@@ -18,10 +18,10 @@ public class Dynamic : MonoBehaviour
 
     public Rigidbody2D rigidbody2D;
 
-    //private void OnGUI()
-    //{
-    //    GUI.Box(new Rect(0, 0, 100, 20), "Score:" + Score);
-    //}
+    private void OnGUI()
+    {
+        GUI.Box(new Rect(0, 0, 100, 20), "Score:" + Score);
+    }
 
     // Start is called before the first frame update
     void Start()
