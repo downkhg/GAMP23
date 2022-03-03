@@ -4,15 +4,35 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    public int Score;
+    public enum E_ITEM_EFFECT { SUPER, RECOVERY, SCORE, BULLET }
+    public E_ITEM_EFFECT eEffect;
+
+    public void Use(GameObject obj)
+    {
+        switch (eEffect)
+        {
+            case E_ITEM_EFFECT.SUPER:
+                SuperMode superMode = obj.GetComponent<SuperMode>();
+                if(superMode != null)
+                    superMode.Active();
+                break;
+            case E_ITEM_EFFECT.RECOVERY:
+                Player player = obj.GetComponent<Player>();
+                if(player)
+                    player.nHP = player.nMaxHP;
+                break;
+            case E_ITEM_EFFECT.SCORE:
+                Dynamic dynamic = obj.GetComponent<Dynamic>();
+                if (dynamic)
+                    dynamic.Score += 100;
+                break;
+            case E_ITEM_EFFECT.BULLET:
+                break;
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.name == "player")
-        {
-            Dynamic dynamic = collision.gameObject.GetComponent<Dynamic>();
-            dynamic.Score += Score;
-            Destroy(this.gameObject);
-        }
+        Use(collision.gameObject);
     }
 }
