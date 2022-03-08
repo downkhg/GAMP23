@@ -17,6 +17,22 @@ public class GameManager : MonoBehaviour
 
     public GUIPlayerInfo guiPlayerInfo;
 
+    public GameObject objPopupLayer;
+
+    public void SetPopup()
+    {
+        if (objPopupLayer.activeSelf == false)
+        {
+            Time.timeScale = 0;
+            objPopupLayer.SetActive(true);
+        }
+        else
+        {
+            objPopupLayer.SetActive(false);
+            Time.timeScale = 1;
+        }
+    }
+
     public void ShowSecene(E_GUI_STATE state)
     {
         for (int i = 0; i < listGUIScene.Count; i++)
@@ -63,6 +79,10 @@ public class GameManager : MonoBehaviour
                 EventGameOver();
                 EventCameraTargetFixed();
                 EventEaglePonstFixed();
+                if(Input.GetKeyDown(KeyCode.I))
+                {
+                    SetPopup();
+                }
                 break;
         }
     }
@@ -73,6 +93,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        objPopupLayer.SetActive(false);
         SetGUIStatus(curGUIState);
     }
 

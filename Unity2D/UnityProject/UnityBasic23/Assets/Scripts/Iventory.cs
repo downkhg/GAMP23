@@ -15,6 +15,20 @@ public class Iventory : MonoBehaviour
         }
     }
 
+    public ItemInfo GetItemInfo(Item item)
+    {
+        if(item)
+        {
+            return itemInfos.Find(iteminfo => item.eEffect == iteminfo.effectMode);
+        }
+        return null;
+    }
+
+    public ItemInfo GetItemInfo(Item.E_ITEM_EFFECT item_eff)
+    {
+        return itemInfos.Find(iteminfo => item_eff == iteminfo.effectMode);
+    }
+
     public ItemInfo GetItemInfo(int idx)
     {
         ItemInfo itemInfo = itemInfos[idx];
