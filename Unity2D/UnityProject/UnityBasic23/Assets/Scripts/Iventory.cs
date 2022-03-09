@@ -15,6 +15,12 @@ public class Iventory : MonoBehaviour
         }
     }
 
+    public void SetInventory(Item.E_ITEM_EFFECT item_eff)
+    {
+        ItemInfo itemInfo = GameManager.GetInstance().itemManager.GetItemInfo(item_eff);
+        itemInfos.Add(itemInfo);
+    }
+
     public ItemInfo GetItemInfo(Item item)
     {
         if(item)
@@ -50,10 +56,21 @@ public class Iventory : MonoBehaviour
         }
     }
 
+    public void TestIventory(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            SetInventory(Item.E_ITEM_EFFECT.SUPER);
+            SetInventory(Item.E_ITEM_EFFECT.BULLET);
+            SetInventory(Item.E_ITEM_EFFECT.RECOVERY);
+            SetInventory(Item.E_ITEM_EFFECT.SCORE);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        TestIventory(20);
     }
 
     // Update is called once per frame

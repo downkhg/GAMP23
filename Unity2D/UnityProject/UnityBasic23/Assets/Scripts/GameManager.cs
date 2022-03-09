@@ -94,6 +94,7 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         objPopupLayer.SetActive(false);
+        
         SetGUIStatus(curGUIState);
     }
 
