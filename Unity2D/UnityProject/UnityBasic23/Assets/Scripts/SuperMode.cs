@@ -37,6 +37,7 @@ public class SuperMode : MonoBehaviour
             if (color.a == 1) color.a = 0;
             else color.a = 1;
             spriteRenderer.color = color;
+            //spriteRenderer.color.a = 1;
         }
     }
 }

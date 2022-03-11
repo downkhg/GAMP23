@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     public GUIPlayerInfo guiPlayerInfo;
 
     public GameObject objPopupLayer;
+    public GUIIventory guiIventory;
+    public GUIItemPopup guiItemPopup;
 
     public void SetPopup()
     {
@@ -25,11 +27,29 @@ public class GameManager : MonoBehaviour
         {
             Time.timeScale = 0;
             objPopupLayer.SetActive(true);
+            //if (responnerPlayer.objPlayer)
+            //   guiIventory.SetIventory(responnerPlayer.objPlayer.GetComponent<Iventory>());
         }
         else
         {
+            //guiIventory.RemoveButtons();
             objPopupLayer.SetActive(false);
             Time.timeScale = 1;
+        }
+        guiItemPopup.gameObject.SetActive(false);
+    }
+
+    public void UpdatePopup()
+    {
+        if (objPopupLayer.activeSelf == true)
+        {
+            Iventory iventory = responnerPlayer.objPlayer.GetComponent<Iventory>();
+            if (iventory.itemInfos.Count != guiIventory.listItemButton.Count)
+            {
+                guiIventory.RemoveButtons();
+                if (responnerPlayer.objPlayer)
+                    guiIventory.SetIventory(iventory);
+            }
         }
     }
 
@@ -102,6 +122,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         UpdateGUIStatus();
+        UpdatePopup();
     }
 
     public void EventGameOver()

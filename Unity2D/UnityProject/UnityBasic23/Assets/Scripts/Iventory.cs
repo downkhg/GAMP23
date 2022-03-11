@@ -42,19 +42,24 @@ public class Iventory : MonoBehaviour
         return itemInfo;
     }
 
-    private void OnGUI()
+    public void RemoveItemInfo(ItemInfo itemInfo)
     {
-        int w = 100;
-        int h = 20;
-        for(int i = 0;  i< itemInfos.Count; i++)
-        {
-            if(GUI.Button(new Rect(0,h*i,w,h), itemInfos[i].name))
-            {
-                ItemInfo itemInfo = GetItemInfo(i);
-                Item.Use(itemInfo.effectMode, this.gameObject);
-            }
-        }
+        itemInfos.Remove(itemInfo);
     }
+    ////테스트용 코드
+    //private void OnGUI()
+    //{
+    //    int w = 100;
+    //    int h = 20;
+    //    for(int i = 0;  i< itemInfos.Count; i++)
+    //    {
+    //        if(GUI.Button(new Rect(0,h*i,w,h), itemInfos[i].name))
+    //        {
+    //            ItemInfo itemInfo = GetItemInfo(i);
+    //            Item.Use(itemInfo.effectMode, this.gameObject);
+    //        }
+    //    }
+    //}
 
     public void TestIventory(int count)
     {

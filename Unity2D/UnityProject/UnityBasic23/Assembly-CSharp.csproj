@@ -71,6 +71,7 @@
     <Compile Include="Assets\Scripts\Dynamic.cs" />
     <Compile Include="Assets\Scripts\Eagle.cs" />
     <Compile Include="Assets\Scripts\GUI\GUIItemButton.cs" />
+    <Compile Include="Assets\Scripts\GUI\GUIItemPopup.cs" />
     <Compile Include="Assets\Scripts\GUI\GUIIventory.cs" />
     <Compile Include="Assets\Scripts\GUI\GUIPlayerInfo.cs" />
     <Compile Include="Assets\Scripts\GUI\GUIStatusBar.cs" />

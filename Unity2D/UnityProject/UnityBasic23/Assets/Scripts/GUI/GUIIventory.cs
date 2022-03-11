@@ -21,6 +21,15 @@ public class GUIIventory : MonoBehaviour
         SetContentSize();
     }
 
+    public void RemoveButtons()
+    {
+        foreach (GUIItemButton guiItemButton in listItemButton)
+        {
+            Destroy(guiItemButton.gameObject);
+        }
+        listItemButton.Clear();
+    }
+
     public void SetContentSize()
     {
         RectTransform rectContent = gridConttent.gameObject.GetComponent<RectTransform>();
@@ -36,15 +45,15 @@ public class GUIIventory : MonoBehaviour
         rectContent.sizeDelta = vCotentSize;
     }
 
-    void Start()//테스트용
-    {
-        Debug.Log(gameObject.name + " Start");
-        GameObject objPlayer = GameManager.GetInstance().responnerPlayer.objPlayer;
+    //void Start()//테스트용
+    //{
+    //    Debug.Log(gameObject.name + " Start");
+    //    GameObject objPlayer = GameManager.GetInstance().responnerPlayer.objPlayer;
 
-        if (objPlayer)
-        {
-            Iventory iventory = objPlayer.GetComponent<Iventory>();
-            SetIventory(iventory);
-        }
-    }
+    //    if (objPlayer)
+    //    {
+    //        Iventory iventory = objPlayer.GetComponent<Iventory>();
+    //        SetIventory(iventory);
+    //    }
+    //}
 }

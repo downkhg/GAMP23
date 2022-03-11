@@ -15,18 +15,22 @@ public class Item : MonoBehaviour
                 SuperMode superMode = targetObject.GetComponent<SuperMode>();
                 if (superMode != null)
                     superMode.Active();
+                return true;
                 break;
             case E_ITEM_EFFECT.RECOVERY:
                 Player player = targetObject.GetComponent<Player>();
                 if (player)
                     player.nHP = player.nMaxHP;
+                return true;
                 break;
             case E_ITEM_EFFECT.SCORE:
                 Dynamic dynamic = targetObject.GetComponent<Dynamic>();
                 if (dynamic)
                     dynamic.Score += 100;
+                return true;
                 break;
             case E_ITEM_EFFECT.BULLET:
+                return true;
                 break;
         }
         return false;
