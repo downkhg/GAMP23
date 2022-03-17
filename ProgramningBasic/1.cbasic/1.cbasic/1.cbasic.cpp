@@ -11,9 +11,15 @@ void SumMain()//사용자정의함수: 내가 만든 함수.
 	printf("%d + %d = %d", a, b, c); //라이브러리함수: 라이브러리가 제공하는 함수.
 }
 
+void CircleAreaMain()
+{
+
+}
+
 void main()
 {
 	//Ctrl+F5
-	printf("Hello World!!!");//출력함수
+	printf("Hello World!!!\n");//출력함수 //\n:줄바꿈문자
 	SumMain();//세미콜론: 문장의 끝에 들어가는 기호
+	CircleAreaMain();
 }
