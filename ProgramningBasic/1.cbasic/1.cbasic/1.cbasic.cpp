@@ -53,15 +53,27 @@ void ASCIICodeTestMain()
 }
 
 //태양과 지구사이의 거리가 d이고, 
-//태양의 속도가 s일때,
+//빛 속도가 s일때,
 //태양에서 지구에 닿는 시간 t를 구하여라.
 //s: 30만 km/s
 //d: 14960만km
 //t: 초단위
 //심화: t를 분 초로 나타내보기
+//데이터: distance, speed, time -> 변수: int//정수, float//실수, charX //문자x 
+//알고리즘: d / s = t
+//---------------- //d //- //s
+//검증(=결과가 맞는지 확인)을 해야한다. -> 정수x 실수o -> 나누어 떨어지지않으므로 float
 void LightSpeedMain()
 {
-
+	float dist = 14960;
+	float speed = 30;
+	float time = dist / speed;
+	printf("Time:%f\n", time);
+	printf("%f / %f = %f\n",dist,speed,time);
+	int min = time / 60;
+	//int sec = (int)time % 60;
+	int sec = time - (min * 60);
+	printf("%d:%d",min, sec);
 }
 
 void main()
@@ -71,6 +83,6 @@ void main()
 	//SumMain();//세미콜론: 문장의 끝에 들어가는 기호
 	//CircleAreaMain();
 	//ValSizeMain();
-	ASCIICodeTestMain();
+	//ASCIICodeTestMain();
 	LightSpeedMain();
 }
