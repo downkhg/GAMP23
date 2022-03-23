@@ -75,6 +75,20 @@ void LightSpeedMain()
 	int sec = time - (min * 60);
 	printf("%d:%d",min, sec);
 }
+//전위연산자:++data,후위연산자:data++ 
+//데이터의 값이 전위연산자와 후위 연산자의 차이점을 확인하는 프로그램
+//데이터: 데이터2개가 필요하다 -> nDataA,nDataB -> 정수
+//알고리즘: nDataB = ++nDataA, nDataB = nDataA++, ?
+void IncDecTestMain()
+{
+	int nDataA = 10, nDataB; //10, ?
+	nDataB = nDataA; //10
+	printf("1.nDataA/B:%d/%d\n",nDataA,nDataB);
+	nDataB = ++nDataA; //11/11 ->  전위연산자: 대입연산자보다 우선순위가 높으므로, 증감하고, 값이 변수에 대입된다.
+	printf("2.nDataA/B:%d/%d\n", nDataA, nDataB);
+	nDataB = nDataA++; //12/12 -> 12/11 -> 후위연산자는 대입연산자보다 우선순위가 낮으므로, 증감전 값이 변수에 대입된다.
+	printf("3.nDataA/B:%d/%d\n", nDataA, nDataB);
+}
 
 void main()
 {
@@ -84,5 +98,6 @@ void main()
 	//CircleAreaMain();
 	//ValSizeMain();
 	//ASCIICodeTestMain();
-	LightSpeedMain();
+	//LightSpeedMain();
+	IncDecTestMain();
 }
