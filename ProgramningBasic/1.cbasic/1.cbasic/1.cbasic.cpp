@@ -89,6 +89,50 @@ void IncDecTestMain()
 	nDataB = nDataA++; //12/12 -> 12/11 -> 후위연산자는 대입연산자보다 우선순위가 낮으므로, 증감전 값이 변수에 대입된다.
 	printf("3.nDataA/B:%d/%d\n", nDataA, nDataB);
 }
+//점수를 입력받아서 학점을 출력하는 프로그램
+//(A: 90이상 B: 80점이상 C: 70점이상 D: 60점이상 F: 60점미만)
+//데이터: 점수->정수, 학점->문자
+//알고리즘: 입력받은 점수가 (A: 90이상 B: 80점이상 C: 70점이상 D: 60점이상 F: 60점미만) 에 해당되면 학점을 출력하기
+void GradeTestMain()
+{
+	int nScore;
+	char cGrade;
+
+	printf("Score:");
+	scanf("%d", &nScore);
+
+	if (nScore >= 90)
+	{
+		cGrade = 'A';
+	}
+	else
+	{
+		if (nScore >= 80)
+		{
+			cGrade = 'B';
+		}
+		else
+		{
+			if (nScore >= 70)
+			{
+				cGrade = 'C';
+			}
+			else
+			{
+				if (nScore >= 60)
+				{
+					cGrade = 'D';
+				}
+				else
+				{
+					cGrade = 'F';
+				}
+			}
+		}
+	}
+
+	printf("Score/Grade:%d/%c",nScore,cGrade);
+}
 
 void main()
 {
@@ -99,5 +143,6 @@ void main()
 	//ValSizeMain();
 	//ASCIICodeTestMain();
 	//LightSpeedMain();
-	IncDecTestMain();
+	//IncDecTestMain();
+	GradeTestMain();
 }
