@@ -134,6 +134,107 @@ void GradeTestMain()
 	printf("Score/Grade:%d/%c",nScore,cGrade);
 }
 
+void GradeTestMain2()
+{
+	int nScore;
+	char cGrade;
+
+	printf("Score:");
+	scanf("%d", &nScore);
+
+	if (nScore >= 90)
+	{
+		cGrade = 'A';
+	}
+	else if (nScore >= 80)
+	{
+		cGrade = 'B';
+	}
+	else if (nScore >= 70)
+	{
+		cGrade = 'C';
+	}
+	else if (nScore >= 60)
+	{
+		cGrade = 'D';
+	}
+	else
+	{
+		cGrade = 'F';
+	}
+
+	printf("Score/Grade:%d/%c", nScore, cGrade);
+}
+//계산기 만들기
+//1. 계산기 -> (숫자:변수:정수?실수!)와 (연산자:변수:문자)를 (입력:scanf)하면 그(결과:변수:실수)를 출력하는 기계.
+//2. 연산자는 사칙연산만 가능하다(+,-,*,/)
+//3. 연산을 하기위해서 최소 2개의 변수가 필요하므로 2개만 사용한다.
+//데이터: 숫자A, 숫자B, 연산자, 결과
+//알고리즘: 숫자와 연산자를 입력받고, 
+//		    입력받은 연산자가 +면 두수를 더하여 결과에 넣는다.
+//		    입력받은 연산자가 -면 두수를 빼고 결과에 넣는다.
+//		    입력받은 연산자가 *면 두수를 곱하고 결과에 넣는다.
+//		    입력받은 연산자가 /면 두수를 나누고 결과에 넣는다.
+void CaculatorMain()
+{
+	float fDataA, fDataB, fResult;
+	char cOp;
+	//scanf("%f", &fDataA);
+	//scanf("%f", &fDataB);
+	//scanf("%c", &cOp);
+	printf("ex) 1+1 >> ");
+	scanf("%f%c%f",&fDataA,&cOp,&fDataB);
+
+	if(cOp == '+')
+		fResult = fDataA + fDataB;
+	else if (cOp == '-')
+		fResult = fDataA - fDataB;
+	else if (cOp == '*')
+		fResult = fDataA * fDataB;
+	else if (cOp == '/')
+		fResult = fDataA / fDataB;
+	else
+	{
+		printf("%c is not Support!\n",cOp);
+		return; //리턴을 만나면 함수는 종료된다.
+	}
+
+	printf("%f%c%f=%f",fDataA,cOp, fDataB, fResult);
+}
+
+void CaculatorSwitchMain()
+{
+	float fDataA, fDataB, fResult;
+	char cOp;
+	//scanf("%f", &fDataA);
+	//scanf("%f", &fDataB);
+	//scanf("%c", &cOp);
+	printf("ex) 1+1 >> ");
+	scanf("%f%c%f", &fDataA, &cOp, &fDataB);
+
+	switch (cOp)
+	{
+	case '+':
+		fResult = fDataA + fDataB;
+		break;
+	case '-':
+		fResult = fDataA - fDataB;
+		break;
+	case '*':
+		fResult = fDataA * fDataB;
+		break;
+	case '/':
+		fResult = fDataA / fDataB;
+		break;
+	default:
+		printf("%c is not Support!\n", cOp);
+		return; //리턴을 만나면 함수는 종료된다.
+		break;
+	}
+	
+	printf("%f%c%f=%f", fDataA, cOp, fDataB, fResult);
+}
+
 void main()
 {
 	//Ctrl+F5
@@ -144,5 +245,6 @@ void main()
 	//ASCIICodeTestMain();
 	//LightSpeedMain();
 	//IncDecTestMain();
-	GradeTestMain();
+	//GradeTestMain();
+	//CaculatorMain();
 }
