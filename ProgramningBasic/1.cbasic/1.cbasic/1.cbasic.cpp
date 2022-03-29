@@ -235,6 +235,113 @@ void CaculatorSwitchMain()
 	printf("%f%c%f=%f", fDataA, cOp, fDataB, fResult);
 }
 
+//계산기 만들기
+//1. 계산기 -> (숫자:변수:정수?실수!)와 (연산자:변수:문자)를 (입력:scanf)하면 그(결과:변수:실수)를 출력하는 기계.
+//2. 연산자는 사칙연산만 가능하다(+,-,*,/)
+//3. 연산을 하기위해서 최소 2개의 변수가 필요하므로 2개만 사용한다.
+//4. 계산을 종료할때까지 (반복)해서 결과를 입력하고, 확인할수있다.
+//데이터: 숫자A, 숫자B, 연산자, 결과
+//알고리즘: 숫자와 연산자를 입력받고, 
+//		    입력받은 연산자가 +면 두수를 더하여 결과에 넣는다.
+//		    입력받은 연산자가 -면 두수를 빼고 결과에 넣는다.
+//		    입력받은 연산자가 *면 두수를 곱하고 결과에 넣는다.
+//		    입력받은 연산자가 /면 두수를 나누고 결과에 넣는다.
+void CaculatorLoofMain()
+{
+	float fDataA, fDataB, fResult; //두값을 입력하는 실수형변수와 정답을 입력하는 변수를 만들었다. 초기화 되지않았으므로 모든 변수의 값은 알수없다.
+	char cOp = 0; //연산자를 입력받기위해서 정수형변수를 선언하고 초기화지 않았다.
+
+	//while (true) //참인 동안
+	//while(cOp == 'x')// 0 == 'x' -> F
+	//while (!(cOp == 'x'))// 0 == 'x' -> F //종료조건의 반대 결과를 반복문에 조건으로 만든다.
+	while (cOp != 'x')
+	{
+		printf("ex) 1+1 exit)?x?>> "); //
+		scanf("%f%c%f", &fDataA, &cOp, &fDataB); //
+		//if (cOp == 'x') break; //인간은 다음과 같이 끝나는 조건을 생각하기 쉬우므로, 조건문으로 종료한다.
+		switch (cOp)
+		{
+		case '+':
+			fResult = fDataA + fDataB;
+			break;
+		case '-':
+			fResult = fDataA - fDataB;
+			break;
+		case '*':
+			fResult = fDataA * fDataB;
+			break;
+		case '/':
+			fResult = fDataA / fDataB;
+			break;
+		default:
+			printf("%c is not Support!\n", cOp);
+			return; //리턴을 만나면 함수는 종료된다.
+			break;
+		}
+
+		printf("%f%c%f=%f\n", fDataA, cOp, fDataB, fResult);
+	}
+}
+
+//세균은 10마리를 배양하고 100마리 이상일때 시간은?
+//세균은 1시간마다 2배씩 증가한다.
+//데이터: 세균수,시간 -> 정수! 실수?
+//알고리즘: 1시간마다, 세균수*2,  100마리 이상이될때까지
+//1.데이터와 알고리즘을 분리한다.
+//2.데이터는 변수 알고리즘은 연산,반복,조건 등이 조합된다.
+//3.반복되는 경우는 먼저 반복하고 정답을 출력한다.
+void BateriaMain()
+{
+	int nBater = 10;
+	int nTime = 0;
+
+	while (true)
+	{
+		nTime = nTime + 1; //1
+		nBater = nBater * 2; //10 * 2 = 20
+		printf("Batera/Time: %d/%d\n", nBater, nTime);
+		if (nBater >= 100) break;
+	}
+	//nTime = 1; //1
+	//nBater = nBater * 2; //10 * 2 = 20
+
+	//nTime = 2; //2
+	//nBater = nBater * 2; //20 * 2 = 40
+
+	//nTime = 3; //3
+	//nBater = nBater * 2; //40 * 2 = 80
+
+	//nTime = 4; //4
+	//nBater = nBater * 2; //80 * 2 = 160
+
+	printf("Batera/Time: %d/%d\n",nBater,nTime);
+}
+
+//(세균:변수) 10마리를 배양하여 (10시간후:조건)의 세균수를 구하여라.
+//이때, 세균이 (1시간 마다 4배)찍 증가한다 
+//세균수:10 //시간:0  //세균수*=4
+void BateriaCountMain()
+{
+	int nBater = 10;
+	int nTime = 0;
+
+	////일반적으로 로직을 생각하기엔 while문이 적절하다.
+	//while (true)
+	//{
+	//	nTime = nTime + 1; //1
+	//	nBater = nBater * 4; //10 * 4 = 40
+	//	printf("Batera/Time: %d/%d\n", nBater, nTime);
+	//	if (nTime == 10) break;
+	//}
+	
+	////프로그래밍에 익숙하지않다면 이렇게 사용하기 쉽지않다.
+	//for (nTime = 0; nTime <= 10; nTime++)
+	//{
+	//	nBater = nBater * 4; //10 * 4 = 40
+	//	printf("Batera/Time: %d/%d\n", nBater, nTime);
+	//}
+}
+
 void main()
 {
 	//Ctrl+F5
@@ -247,4 +354,7 @@ void main()
 	//IncDecTestMain();
 	//GradeTestMain();
 	//CaculatorMain();
+	//CaculatorLoofMain();
+	//BateriaMain();
+	BateriaCountMain();
 }
