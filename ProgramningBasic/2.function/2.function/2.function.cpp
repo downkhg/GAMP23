@@ -24,7 +24,8 @@ float Caculator(float fDataA, float fDataB, char cOp);
 
 void main() //1
 {
-	//F9: 브레이킹 포인트 //F5: 디버거모드로 실행
+	//F9: 브레이킹 포인트 설정
+	//F5: 디버거모드로 실행 //shift+F5: 디버깅 중단
 	//F11: 함수안으로 이동 //F10: 함수단위에서 1줄 씩 이동
 	FunctionTestMain();//함수의 호출 //2
 	CaculatorLoofMain();//101
