@@ -123,10 +123,51 @@ void Array2DTestMain()
 	}
 }
 
+void StringTestMain()
+{
+	//"문자열" 문자열끝을 넣는다.
+	char strWord[24] = "gameprograming";//24 - 14= 10?
+	strWord[0] = 't';
+	strWord[1] = 'e';
+	strWord[2] = 's';
+	strWord[3] = 't';
+	//strWord[4] = '\0';//문자열끝: 문자열의 끝임을 알리는 문자.(== 0)
+	printf("for:");
+	for (int i = 0; i < 24; i++)
+		printf("%c",strWord[i]);
+	printf("\n");
+	printf("stirng:%s\n",strWord);
+	printf("while:");
+	int idx = 0;
+	while (strWord[idx] != '\0')//t != 0 -> T 
+	{
+		printf("%c",strWord[idx]);
+		idx++;
+	}
+	printf("\n");
+}
+
+void FullNameMakerMain()
+{
+	char strLastName[8] = "k";
+	char strFistName[8] = "hg";
+	char strFullNameKr[16];
+	char strFullNameEn[16];
+	strcpy(strFullNameKr, strLastName);
+	strcat(strFullNameKr, strFistName);
+	printf("kr:%s\n",strFullNameKr);
+
+	sprintf(strFullNameEn, "%s%s", strFistName, strLastName);
+	printf("en:%s\n",strFullNameEn);
+
+}
+
 void main()
 {
 	//VarAndPointerMain();
 	//FunctionAndPointerMain();
 	//ArrayAndPointerMain();
-	Array2DTestMain();
+	//Array2DTestMain();
+	//FullNameMakerMain();
+	StringTestMain();
 }
