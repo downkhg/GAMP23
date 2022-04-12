@@ -123,9 +123,22 @@ void Array2DTestMain()
 	}
 }
 
+void PrintString(const char* msg, const char* str, bool isIdx)
+{
+	printf("%s",msg);
+	int idx = 0;
+	while (str[idx] != '\0')//t != 0 -> T 
+	{
+		if (isIdx == false) printf("%c", str[idx]);
+		else  printf("[%d]%c,", idx, str[idx]);
+		idx++;
+	}
+	printf("\n");
+}
+
 void StringTestMain()
 {
-	//"문자열" 문자열끝을 넣는다.
+	//"문자열" 문자열끝을 넣는다. 나머지 원소에는 0(=='\0')으로 초기화된다.
 	char strWord[24] = "gameprograming";//24 - 14= 10?
 	strWord[0] = 't';
 	strWord[1] = 'e';
@@ -137,13 +150,7 @@ void StringTestMain()
 		printf("%c",strWord[i]);
 	printf("\n");
 	printf("stirng:%s\n",strWord);
-	printf("while:");
-	int idx = 0;
-	while (strWord[idx] != '\0')//t != 0 -> T 
-	{
-		printf("%c",strWord[idx]);
-		idx++;
-	}
+	PrintString("while:", strWord, false);
 	printf("\n");
 }
 
@@ -153,12 +160,40 @@ void FullNameMakerMain()
 	char strFistName[8] = "hg";
 	char strFullNameKr[16];
 	char strFullNameEn[16];
+
 	strcpy(strFullNameKr, strLastName);
 	strcat(strFullNameKr, strFistName);
-	printf("kr:%s\n",strFullNameKr);
+	PrintString("kr:", strFullNameKr,true);
+	printf("kr[%d]:%s\n", strlen(strFullNameKr), strFullNameKr);
 
 	sprintf(strFullNameEn, "%s%s", strFistName, strLastName);
-	printf("en:%s\n",strFullNameEn);
+	PrintString("en:", strFullNameEn, true);
+	printf("en[%d]:%s\n",strlen(strFullNameEn),strFullNameEn);
+
+	int nResult = strcmp(strLastName, strFistName);
+
+	if (nResult)
+		printf("%d: %s != %s\n", nResult, strFistName, strLastName);
+	else
+		printf("%d: %s == %s\n", nResult, strFistName, strLastName);
+
+}
+/*
+* 프로그램출력예시
+정답:GAME
+Q: _ _ _ _
+A: G
+Q: G _ _ _
+......
+A:GA_E
+Q:M
+A:GAME
+
+1.어떻게든 풀면됨.
+2.함수를 이용하여 문제풀기(반복문사용금지)
+*/
+void HangMainGameMain()
+{
 
 }
 
@@ -168,6 +203,6 @@ void main()
 	//FunctionAndPointerMain();
 	//ArrayAndPointerMain();
 	//Array2DTestMain();
-	//FullNameMakerMain();
-	StringTestMain();
+	FullNameMakerMain();
+	//StringTestMain();
 }
