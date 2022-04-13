@@ -158,11 +158,11 @@ void FullNameMakerMain()
 {
 	char strLastName[8] = "k";
 	char strFistName[8] = "hg";
-	char strFullNameKr[16];
-	char strFullNameEn[16];
+	char strFullNameKr[16];// = "";
+	char strFullNameEn[16];// = "";
 
-	strcpy(strFullNameKr, strLastName);
-	strcat(strFullNameKr, strFistName);
+	//strcpy(strFullNameKr, strLastName);
+	strcat_s(strFullNameKr, strFistName);
 	PrintString("kr:", strFullNameKr,true);
 	printf("kr[%d]:%s\n", strlen(strFullNameKr), strFullNameKr);
 
@@ -172,11 +172,11 @@ void FullNameMakerMain()
 
 	int nResult = strcmp(strLastName, strFistName);
 
-	if (nResult)
-		printf("%d: %s != %s\n", nResult, strFistName, strLastName);
-	else
+	//if (!nResult)
+	if (!strcmp(strLastName, strFistName))
 		printf("%d: %s == %s\n", nResult, strFistName, strLastName);
-
+	else
+		printf("%d: %s != %s\n", nResult, strFistName, strLastName);
 }
 /*
 * 프로그램출력예시
