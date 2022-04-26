@@ -21,7 +21,7 @@ SNode* FindNodeData(SNode* pStart, int data); //해당 데이터를 가진 노드를 찾는다
 SNode* InsertNodeData(SNode* pStart, int data, int insert); //해당 데이터를 가진 노드 뒤에 노드를 추가한다.
 void DeleteNodeData(SNode* pStart, int del); //해당데이터를 가진 노드를 삭제한다.
 void PrintLinkedList(SNode* pStart); //노드를 순회하며 끝날때까지 출력한다.
-void DeleteLinkedList(SNode* pStart); //노드를 순회하며 모든데이터를 삭제한다.
+void DeleteLinkedList(SNode* *pStart); //노드를 순회하며 모든데이터를 삭제한다.
 void ReverseLinkedList(SNode* pStart); //
 
 									   //연결리스트 동적으로 입력받기.(동적할당 설명용)
@@ -33,8 +33,8 @@ void InputAdd();
 //main()함수 내 코드는 추가는 가능하지만 삭제는 하지말것!
 void main()
 {
-	//_CrtSetBreakAlloc(71); //메모리 누수시 번호를 넣으면 할당하는 위치에 브레이크 포인트를 건다.
-	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF); //메모리 누수 검사 
+	//_CrtSetBreakAlloc(85); //메모리 누수시 번호를 넣으면 할당하는 위치에 브레이크 포인트를 건다.
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF); //메모리 누수 검사 
 
 	SNode* pBegin = NULL;
 	SNode* pEnd = NULL;
@@ -54,15 +54,24 @@ void main()
 	if (pFind != NULL)//0x04 != NULL -> T
 		printf("Find:%d\n", pFind->nData);//Find:40
 
-	pEnd = InsertNodeData(pBegin, 30, 60);//노드 삽입
+	SNode* pInsert = InsertNodeData(pBegin, 30, 60);//노드 삽입//
+	//pInsert = InsertNodeData(pBegin, 70, 80);//노드 삽입//
+
+	if (pInsert != NULL)//0x06 != NULL -> T
+		printf("Insert:%d\n", pInsert->nData);//Insert:60
 
 	PrintLinkedList(pBegin);
 
 	DeleteNodeData(pBegin, 60);//노드 삭제
+	//DeleteNodeData(pBegin, 10);//노드 삭제
+	//DeleteNodeData(pBegin, 50);//노드 삭제
+	//DeleteNodeData(pBegin, -10);//노드 삭제
 
 	PrintLinkedList(pBegin);
 
-	DeleteLinkedList(pBegin); //모든노드삭제 - 이 함수를 호출하지않을시 메모리가 누수됨.
+	DeleteLinkedList(&pBegin); //모든노드삭제 - 이 함수를 호출하지않을시 메모리가 누수됨.
+
+	PrintLinkedList(pBegin);
 }
 
 //여기서 부터 기능을 구현한다.
@@ -73,6 +82,7 @@ SNode* CreateNode(SNode* pNode, int data)
 
 	pTemp = new SNode();
 	pTemp->nData = data;
+	pTemp->pNext = NULL;
 	if(pNode != NULL)//pNode != 0x04 -> T
 		pNode->pNext = pTemp;
 	//pTemp->pNext = pNode;
@@ -80,13 +90,13 @@ SNode* CreateNode(SNode* pNode, int data)
 	return  pTemp;
 }
 
-SNode* FindNodeData(SNode* pStart, int data)
+SNode* FindNodeData(SNode* pStart, int data)//
 {
-	SNode* pNode = pStart;
+	SNode* pNode = pStart;//
 	while (true)
 	{
 		if (pNode->nData != data) //30 != 30 -> F
-			pNode = pNode->pNext;
+			pNode = pNode->pNext;//
 		else//if (pNode->nData == data) //40 != 40
 			break;
 		//if (pNode->nData != data) //30 != 40
@@ -95,27 +105,54 @@ SNode* FindNodeData(SNode* pStart, int data)
 	return pNode;
 }
 
-SNode* InsertNodeData(SNode* pStart, int data, int insert)
+SNode* InsertNodeData(SNode* pStart, int data, int insert)//
 {
-	SNode* pNode = pStart;//냥고양이
-	SNode* pInsert = NULL;//치타
+	SNode* pNode = pStart;//
+	SNode* pInsert = NULL;//
 
-	pNode = FindNodeData(pStart, data);
+	pNode = FindNodeData(pStart, data);//
 
-	pInsert = new SNode();
-	pInsert->pNext = pNode->pNext;
-	pNode->pNext = pInsert;
-	pInsert->nData = insert;
+	if (pNode)
+	{
+		pInsert = new SNode();
+		pInsert->pNext = pNode->pNext;
+		pNode->pNext = pInsert;
+		pInsert->nData = insert;
+	}
 
-	return pNode;
+	return pInsert;
 }
 
 void DeleteNodeData(SNode* pStart, int del)
 {
-	SNode* pPre = NULL;
+	SNode* pPrev = NULL;
 	SNode* pNode = pStart;
 
+	////이코드는 pNode가 null이라면 프로그램이 죽는다.
+	//while (pNode->nData != del)//60 != 60 -> F
+	//{
+	//	pPrev = pNode;
+	//	pNode = pNode->pNext;
+	//	//pPrev = pStart;
+	//}
 
+	while (pNode)
+	{
+		if (pNode->nData != del)
+		{
+			pPrev = pNode;
+			pNode = pNode->pNext;
+		}
+		else break;
+	}
+	
+	////값을 먼저 찾는다해도 이전노드의 다음값을 변경할수 없다.
+	//pNode = FindNodeData(pStart, del);
+	if (pPrev != NULL)
+	{
+		pPrev->pNext = pNode->pNext;
+		delete pNode;
+	}
 }
 
 void PrintLinkedList(SNode* pStart)
@@ -133,10 +170,19 @@ void PrintLinkedList(SNode* pStart)
 	printf("\n");
 }
 
-void DeleteLinkedList(SNode* pStart)
+void DeleteLinkedList(SNode* *pStart)
 {
-	SNode* pNode = pStart;
+	SNode* pNode = *pStart;
 	SNode* pDel = NULL;
+
+	while (pNode != NULL)
+	{
+		pDel = pNode;
+		pNode = pNode->pNext;
+		delete pDel;//
+	}
+
+	*pStart = NULL;
 }
 
 void InputAdd()
@@ -167,5 +213,5 @@ void InputAdd()
 		PrintLinkedList(pStart);
 	}
 
-	DeleteLinkedList(pStart); //모든노드삭제 - 이 함수를 호출하지않을시 메모리가 누수됨.
+	DeleteLinkedList(&pStart); //모든노드삭제 - 이 함수를 호출하지않을시 메모리가 누수됨.
 }
