@@ -1,5 +1,13 @@
 #include <iostream>
 #include <vector>
+#include <list>
+#include <deque>
+#include <queue>
+#include <stack>
+#include <map>
+#include <set>
+#include <string>
+#include <unordered_map>//hash_map -> unordered_map: vs2019부터 변경
 
 using namespace std;
 //벡터: 동적배열
@@ -45,11 +53,12 @@ void VectorMain()
 }
 //1.생성 10개
 //2.크기변성 5개
-//3.0,-10추가
+//3.0,-10추가, 
 //4.찾기 70
 //5.삽입 70에 -20삽입 -> 80은 위에서 찾기를 했을때 70이므로 80이 될수는 없다.
 //6.지우기 삽입된 노드(반복자:이터레이터) 삭제
-//7.뒤집기,모두 삭제
+//7.시작+3, 끝+3
+//8.뒤집기,모두 삭제
 void VectorTestMain()
 {
 	//슬라이드6~10까지 그림과 같도록 만들어보기.
@@ -99,21 +108,260 @@ void VectorTestMain()
 		cout << &container[i] << "[" << i << "]" << container[i] << ",";
 	cout << endl;
 
+	vector<int>::iterator it = container.begin() + 3;
+	if (it != container.end())
+		cout << "7.1.begin+3[" << &*it << "]:" << *it << endl;
+
+	it = container.end() - 3;
+	if (it != container.end())
+		cout << "7.1.end+3[" << &*it << "]:" << *it << endl;
+
 	reverse(container.begin(), container.end());
-	cout << "7-1.reverse(" << container.size() << ")" << endl;
+	cout << "8-1.reverse(" << container.size() << ")" << endl;
 	for (int i = 0; i < container.size(); i++)
 		cout << &container[i] << "[" << i << "]" << container[i] << ",";
 	cout << endl;
 
 	container.clear();
-	cout << "7-2.clear(" << container.size() << ")" << endl;
+	cout << "8-2.clear(" << container.size() << ")" << endl;
 	for (int i = 0; i < container.size(); i++)
 		cout << &container[i] << "[" << i << "]" << container[i] << ",";
 	cout << endl;
 }
 
+//연결리스트
+//1.데이터는 순차접근만 가능하다.(랜덤x)
+//2.연결리스트에 추가,삽입,삭제(?)은 O(1)이다.
+//3.연결리스트의 종류: 단일, 환형, 이중 stl의 리스트는 어디에 해당되는가?
+void ListMain()
+{
+	//슬라이드6~10까지 그림과 같도록 만들어보기.
+	list<int> container(10);
+	cout << "1.Init(" << container.size() << "):" << endl;
+	list<int>::iterator it;
+	int idx = 0;
+	for (it = container.begin(); it != container.end(); it++)
+	{
+		*it = 100 - (idx * 10);
+		idx++;
+	}
+	for (it = container.begin(); it != container.end(); it++)
+		cout << &*it << ":" << *it << ",";
+	cout << endl;
+
+	container.resize(5);
+	cout << "2.resize(" << container.size() << ")" << endl;
+	for (it = container.begin(); it != container.end(); it++)
+		cout << &*it << ":" << *it << ",";
+	cout << endl;
+
+	container.push_back(0);
+	cout << "3-1.push_back(0)" << endl;
+	for (it = container.begin(); it != container.end(); it++)
+		cout << &*it << ":" << *it << ",";
+	cout << endl;
+
+	container.push_back(-10);
+	cout << "3-2.push_back(-10)" << endl;
+	for (it = container.begin(); it != container.end(); it++)
+		cout << &*it << ":" << *it << ",";
+	cout << endl;
+
+	list<int>::iterator itFind = find(container.begin(), container.end(), 70);
+	if (itFind != container.end())
+		cout << "4.Find[" << &*itFind << "]:" << *itFind << endl;
+
+	list<int>::iterator itInsert = container.insert(itFind, -20);
+	if (itInsert != container.end())
+		cout << "5-1.itInsert[" << &*itInsert << "]:" << *itInsert << endl;
+	cout << "5-2.itInsert(" << container.size() << ")" << endl;
+	for (it = container.begin(); it != container.end(); it++)
+		cout << &*it << ":" << *it << ",";
+	cout << endl;
+	/*if (itFind != container.end())
+		cout << "5-3.Find[" << &*itFind << "]:" << *itFind << endl;*/
+
+	container.erase(itInsert);
+	cout << "6.erase(" << container.size() << ")" << endl;
+	for (it = container.begin(); it != container.end(); it++)
+		cout << &*it << ":" << *it << ",";
+	cout << endl;
+
+	it = ++container.begin();
+	if (it != container.end())
+		cout << "7.1.begin++[" << &*it << "]:" << *it << endl;
+
+	it = --container.end();
+	if (it != container.end())
+		cout << "7.1.end--[" << &*it << "]:" << *it << endl;
+
+	reverse(container.begin(), container.end());
+	cout << "8-1.reverse(" << container.size() << ")" << endl;
+	for (it = container.begin(); it != container.end(); it++)
+		cout << &*it << ":" << *it << ",";
+	cout << endl;
+
+	container.clear();
+	cout << "8-2.clear(" << container.size() << ")" << endl;
+	for (it = container.begin(); it != container.end(); it++)
+		cout << &*it << ":" << *it << ",";
+	cout << endl;
+}
+//데크: 앞뒤로 자료를 추가/삭제가능, 랜덤접근가능.
+void DequeMain()
+{
+	//슬라이드6~10까지 그림과 같도록 만들어보기.
+	deque<int> container(10);
+	cout << "1.Init(" << container.size() << "):"  << endl;
+	for (int i = 0; i < container.size(); i++)
+		container[i] = 100 - (i * 10);
+	for (int i = 0; i < container.size(); i++)
+		cout << &container[i] << "[" << i << "]" << container[i] << ",";
+	cout << endl;
+
+	container.resize(5);
+	cout << "2.resize(" << container.size() << "):"  << endl;
+	for (int i = 0; i < container.size(); i++)
+		cout << &container[i] << "[" << i << "]" << container[i] << ",";
+	cout << endl;
+
+	container.push_back(0);
+	cout << "3-1.push_back(0)" << endl;
+	for (int i = 0; i < container.size(); i++)
+		cout << &container[i] << "[" << i << "]" << container[i] << ",";
+	cout << endl;
+
+	container.push_back(-10);
+	cout << "3-2.push_back(-10)" << endl;
+	for (int i = 0; i < container.size(); i++)
+		cout << &container[i] << "[" << i << "]" << container[i] << ",";
+	cout << endl;
+
+	container.push_front(110);
+	cout << "3-3.push_back(110)" << endl;
+	for (int i = 0; i < container.size(); i++)
+		cout << &container[i] << "[" << i << "]" << container[i] << ",";
+	cout << endl;
+
+	deque<int>::iterator itFind = find(container.begin(), container.end(), 70);
+	if (itFind != container.end())
+		cout << "4.Find[" << &*itFind << "]:" << *itFind << endl;
+
+	deque<int>::iterator itInsert = container.insert(itFind, -20);
+	if (itInsert != container.end())
+		cout << "5-1.itInsert[" << &*itInsert << "]:" << *itInsert << endl;
+	cout << "5-2.itInsert(" << container.size() << ")" << endl;
+	for (int i = 0; i < container.size(); i++)
+		cout << &container[i] << "[" << i << "]" << container[i] << ",";
+	cout << endl;
+	/*if (itFind != container.end())
+		cout << "5-3.Find[" << &*itFind << "]:" << *itFind << endl;*/
+
+	container.erase(itInsert);
+	cout << "6.erase(" << container.size() << ")" << endl;
+	for (int i = 0; i < container.size(); i++)
+		cout << &container[i] << "[" << i << "]" << container[i] << ",";
+	cout << endl;
+
+	deque<int>::iterator it = container.begin() + 3;
+	if (it != container.end())
+		cout << "7.1.begin+3[" << &*it << "]:" << *it << endl;
+
+	it = container.end() - 3;
+	if (it != container.end())
+		cout << "7.1.end+3[" << &*it << "]:" << *it << endl;
+
+	reverse(container.begin(), container.end());
+	cout << "8-1.reverse(" << container.size() << ")" << endl;
+	for (int i = 0; i < container.size(); i++)
+		cout << &container[i] << "[" << i << "]" << container[i] << ",";
+	cout << endl;
+
+	container.clear();
+	cout << "8-2.clear(" << container.size() << ")" << endl;
+	for (int i = 0; i < container.size(); i++)
+		cout << &container[i] << "[" << i << "]" << container[i] << ",";
+	cout << endl;
+}
+//스택: 뒤에서 추가되고 뒤에서 꺼냄.
+//재귀함수에서 이전 함수를 호출할때마다 스택에 쌓임.
+//문자열뒤집기 -> 문자배열 -> apple -> elppa
+void StackMain()
+{
+
+}
+//큐: 뒤에서 추가하고 앞에서 꺼냄.
+//메세지큐: 이벤트가 발생한 순서대로 저장하는 공간.
+//입력된 순서대로 명령어 처리하기
+//A,B,C,D -> A,B,C,D
+//B,C,D,A -> B,C,D,A
+void QueueMain()
+{
+
+}
+//우선순위큐: 우선순위가 높은 원소가 먼저나감(힙)
+//무작위로 데이터를 넣었을때 어떤 순서대로 데이터가 나오는가? 큰값부터 나온다.
+//10,20,30 -> 30,20,10
+//30,20,10 -> 30,20,10
+//20,30,10 -> 30,20,10
+void PriorytyQueueMain()
+{
+
+}
+//맵: 사전식으로 데이터를 찾을수있다.
+//해당영어단어를 넣으면 한국어 결과가 나온다.
+void MapMain()
+{
+	map<string, string> mapDic;
+
+	mapDic["test"] = "시험";
+	mapDic["pratice"] = "연습";
+	mapDic["try"] = "도전";
+	mapDic["note"] = "기록";
+
+	cout << mapDic["try"] << endl;
+	cout << mapDic["note"] << endl;
+}
+//셋: 순서없이 데이터를 넣는다. 데이터는 순서와 상관없이 데이터를 찾는다.
+void SetMain()
+{
+	set<int> setData;
+
+	setData.insert(10);
+	setData.insert(20);
+	setData.insert(30);
+	setData.insert(40);
+
+	set<int>::iterator it = setData.find(10);
+
+	if (it != setData.end()) it;
+	for (it = setData.begin(); it != setData.end(); it++)
+		cout << *it << ",";
+	cout << endl;
+}
+//해시맵: 해시테이블
+void HashMapMain()
+{
+	unordered_map<string, string> mapDic;
+
+	mapDic["test"] = "시험";
+	mapDic["pratice"] = "연습";
+	mapDic["try"] = "도전";
+	mapDic["note"] = "기록";
+
+	cout << mapDic["try"] << endl;
+	cout << mapDic["note"] << endl;
+}
+
 void main()
 {
 	//VectorMain();
-	VectorTestMain();
+	//VectorTestMain();
+	//ListMain();
+	//DequeMain();
+	//StackMain();
+	//QueueMain();
+	//PriorytyQueueMain();
+	//MapMain();
+	SetMain();
 }
