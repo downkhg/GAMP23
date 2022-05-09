@@ -286,18 +286,49 @@ void DequeMain()
 //스택: 뒤에서 추가되고 뒤에서 꺼냄.
 //재귀함수에서 이전 함수를 호출할때마다 스택에 쌓임.
 //문자열뒤집기 -> 문자배열 -> apple -> elppa
+//데이터: 문자열 = "apple", 스택<>
+//알고리즘: 문자열을 뒤집기 -> 스택을 이용할것.
 void StackMain()
 {
-
+	char strWord[] = "apple";
+	stack<char> cStack;
+	int idx = 0;
+	while (strWord[idx] != '\0')
+	{
+		cStack.push(strWord[idx]);
+		idx++;
+	}
+	idx = 0;
+	while (strWord[idx] != '\0')
+	{
+		strWord[idx] = cStack.top();
+		cStack.pop();
+		idx++;
+	}
+	cout << strWord << endl;
 }
 //큐: 뒤에서 추가하고 앞에서 꺼냄.
 //메세지큐: 이벤트가 발생한 순서대로 저장하는 공간.
 //입력된 순서대로 명령어 처리하기
 //A,B,C,D -> A,B,C,D
 //B,C,D,A -> B,C,D,A
+//(입력된 문자)를 (큐)에 저장하고, 완료되면, 큐에 저장된값을 1개씩빼서 확인한다.
+//데이터: 입력문자, 큐
+//알고리즘: 큐에 입력된 문자를 저장한다, 저장이 완료되면 1개씩 빼서 확인한다.
 void QueueMain()
 {
-
+	queue<char> cQueue;
+	char cInput = '\0';
+	while (cInput != 'x')
+	{
+		cin >> cInput;
+		cQueue.push(cInput);
+	}
+	while (cQueue.empty() == false)
+	{
+		cout << cQueue.front() << endl;
+		cQueue.pop();
+	}
 }
 //우선순위큐: 우선순위가 높은 원소가 먼저나감(힙)
 //무작위로 데이터를 넣었을때 어떤 순서대로 데이터가 나오는가? 큰값부터 나온다.
@@ -306,7 +337,18 @@ void QueueMain()
 //20,30,10 -> 30,20,10
 void PriorytyQueueMain()
 {
-
+	priority_queue<char> cQueue;
+	char cInput = '\0';
+	while (cInput != 'x')
+	{
+		cin >> cInput;
+		cQueue.push(cInput);
+	}
+	while (cQueue.empty() == false)
+	{
+		cout << cQueue.top() << endl;
+		cQueue.pop();
+	}
 }
 //맵: 사전식으로 데이터를 찾을수있다.
 //해당영어단어를 넣으면 한국어 결과가 나온다.
@@ -326,11 +368,13 @@ void MapMain()
 void SetMain()
 {
 	set<int> setData;
-
-	setData.insert(10);
+	
+	for (int i = 0; i < 4; i++)
+		setData.insert(50 - (i * 10));
+	/*setData.insert(10);
 	setData.insert(20);
 	setData.insert(30);
-	setData.insert(40);
+	setData.insert(40);*/
 
 	set<int>::iterator it = setData.find(10);
 
