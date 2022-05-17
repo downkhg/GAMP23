@@ -73,7 +73,7 @@ public:
 		nSpeed++;
 	}
 
-	void Break(SCar& cCar)
+	void Break()
 	{
 		nSpeed--;
 	}
