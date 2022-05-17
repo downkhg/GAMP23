@@ -56,9 +56,11 @@ void StructCarTestMain()
 	CarDashBoard(sCar);
 }
 
-class CCar
+class CCar //클래스: 함수와 변수를 묶어서 나타낸것(캡슐화)
 {
-public:
+public://클래스외부에서 함수의 접근을 허용한다.
+	//자동차의 조작은 도둑이 타서도 조작하면 자동차는 움직일수있다.
+	//멤버함수: 멤버함수는 외부에서 변수를 변경하기 위해서 사용하는 메세지.
 	enum E_GEAR { P, R, N, D };
 
 	void Init(string color)
@@ -83,16 +85,21 @@ public:
 		eGear = gear;
 	}
 
+	void SetColor(string color)
+	{
+		strColor = color;
+	}
+
 	void DashBoard()
 	{
 		cout << "Color:" << strColor << endl;
 		cout << "Speed:" << nSpeed << endl;
 		cout << "Gear:" << eGear << endl;
 	}
-private:
-	int nSpeed;
+private: //함수의 외부에서 접근을 금지한다.
+	//멤버변수: 일반적으로 private한다.
+	int nSpeed; //속도는 물리적인 현상으로 0부터 엑셀을 밟으면 증가하고, 브레이크를 밟으면 속도가 감소한다.
 	string strColor;
-
 	E_GEAR eGear;
 };
 
@@ -100,6 +107,7 @@ void StructCarTestMain()
 {
 	SCar sCar;
 	CarInit(sCar, "red");
+	sCar.strColor = "blue";
 	CarDashBoard(sCar);
 	CarSetGear(sCar, SCar::E_GEAR::D);
 	CarDashBoard(sCar);
@@ -113,6 +121,9 @@ void ClassCarTestMain()
 {
 	CCar cCar;
 	cCar.Init("red");
+	//은닉: 멤버변수를 외부에서 함부로 변경할수 없도록 만드는것.
+	//cCar.strColor = "blue"; //길을 지나가던 누군가가 내차의 페인트칠을 했다. -> 범법행위
+	cCar.SetColor("blue"); //내 허락을 받아 자동차 색상을 변경한다 -> 불법아님.
 	cCar.SetGear(CCar::E_GEAR::D);
 	cCar.DashBoard();
 	cCar.Accel();
