@@ -35,30 +35,14 @@ namespace LinkedList
 		pParent->listAdj.push_back(pChilde);
 		return true;
 	};
-	//이것은 DFS도 BFS도 아니다.
-	void Traverse(SNode* pNode)
-	{
-		if (pNode == NULL) return; //0x05 == NULL -> F
-		if (pNode->bVisit == false)
-		{
-			printf("%c", pNode->cData); //전위
-			list<SNode*>::iterator it;
-			for (it = pNode->listAdj.begin(); it != pNode->listAdj.end(); it++)
-			{
-				SNode* pAdj = *it;
-				Traverse(pAdj);
-			}
-			pNode->bVisit = true;
-		}
-	}
 
 	void TraverseDFS(SNode* pNode, bool bPrint = true)
 	{
 		if (pNode->bVisit == false)
 		{
-			if (bPrint) printf("%c,", pNode->cData);//A//B
 			if (pNode->bVisit == false)
 			{
+				if (bPrint) printf("%c,", pNode->cData);//A//B
 				pNode->bVisit = true;
 
 				if (!pNode->listAdj.empty())
@@ -66,7 +50,8 @@ namespace LinkedList
 					list<SNode*>::iterator  it;
 					for (it = pNode->listAdj.begin(); it != pNode->listAdj.end(); it++)
 					{
-						TraverseDFS(*it);//F
+						SNode* pAdjNode = *it;
+						TraverseDFS(pAdjNode,bPrint);//F
 					}
 				}
 			}
@@ -97,7 +82,7 @@ namespace LinkedList
 					pNext = *pNode->itAdj;
 					while (pNext != NULL && pNext->bVisit == true)
 					{
-						if (pNode->itAdj != pNode->listAdj.end())
+						if (pNode->itAdj != pNode->listAdj.end())//end() == end()
 						{
 							//cout << "Revisit!" << (*pNode->itChild)->cData << endl;
 							pNext = *pNode->itAdj;
@@ -112,13 +97,6 @@ namespace LinkedList
 				}
 			}
 		}
-		else
-		{
-			//cout << "Visit Complete! " << visit.top()->cData << endl;
-			visit.pop();
-			if (!visit.empty())
-				pNext = visit.top();
-		}
 		return pNext;
 	}
 
@@ -128,6 +106,13 @@ namespace LinkedList
 		stack<SNode*> visit;
 		do
 		{
+			if (pNode == NULL)
+			{
+				//cout << "Visit Complete! " << visit.top()->cData << endl;
+				visit.pop();
+				if (!visit.empty())
+					pNode = visit.top();
+			}
 			pNode = VisitStackDFS(pNode, visit);
 		} while (!visit.empty());
 		printf("\n");
