@@ -63,7 +63,7 @@ public:
 
 	void Init(string color)
 	{
-		eGear =E_GEAR::N;
+		eGear = E_GEAR::N;
 		nSpeed = 0;
 		strColor = color;
 	}
@@ -94,7 +94,7 @@ private:
 	string strColor;
 
 	E_GEAR eGear;
-}
+};
 
 void StructCarTestMain()
 {
