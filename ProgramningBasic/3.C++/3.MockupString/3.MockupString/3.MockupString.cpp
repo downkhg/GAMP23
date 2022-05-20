@@ -14,6 +14,33 @@ void STDStringMain()
 	cout << "CopyMsg[" << &strCopyMsg << "/" << (int)strCopyMsg.c_str() << "]:" << strCopyMsg.c_str() << endl;
 }
 
+void STDHangManGameMain()
+{
+	string strQ = "____";
+	string strA = "GAME";
+	char cInput;
+
+	do
+	{
+		cout << "Q:" << strQ << endl;
+		cin >> cInput;
+
+		int idx = strA.find(cInput);
+		if (idx == -1)
+		{
+			cout << cInput << "is not found!" << endl;
+		}
+		else
+		{
+			strQ.replace(idx, 1, 1, cInput);
+			//strQ[idx] = cInput;
+		}
+	} 
+	while (!strQ._Equal(strA));
+	cout << "The End" << endl;
+	//while (strQ != strA);
+}
+
 namespace Mockup
 {
 	class string
@@ -63,8 +90,36 @@ void MockupStringMain()
 	cout << "CopyMsg[" << &strCopyMsg << "/" << (int)strCopyMsg.c_str() << "]:" << strCopyMsg.c_str() << endl;
 }
 
+//void MockupHangManGameMain()
+//{
+//	Mockup::string strQ = "____";
+//	Mockup::string strA = "GAME";
+//	char cInput;
+//
+//	do
+//	{
+//		cout << "Q:" << strQ.c_str() << endl;
+//		cin >> cInput;
+//
+//		int idx = strA.find(cInput);
+//		if (idx == -1)
+//		{
+//			cout << cInput.c_str() << "is not found!" << endl;
+//		}
+//		else
+//		{
+//			strQ.replace(idx, 1, 1, cInput);
+//			//strQ[idx] = cInput;
+//		}
+//	} 	while (!strQ._Equal(strA));
+//	cout << "The End" << endl;
+//	//while (strQ != strA);
+//}
+
 void main()
 {
 	//STDStringMain();
+	//MockupStringMain();
+	//STDHangManGameMain();
 	MockupStringMain();
 }
