@@ -33,6 +33,15 @@ namespace Mockup
 			cout << "~string[" << this << "/" << (int)this->c_str() << "]:" << this->c_str() << endl;
 			delete[] m_pStr;
 		}
+		string(string& str)
+		{
+			//*this = str;
+			int nSize = strlen(str.c_str());
+			nSize++;
+			m_pStr = new char[nSize];
+			strcpy_s(m_pStr, nSize, str.c_str());
+			cout << "string[" << this << "/" << (int)this->c_str() << "]:" << this->c_str() << endl;
+		}
 
 		const char* c_str()
 		{
