@@ -40,6 +40,37 @@ void STDHangManGameMain()
 	cout << "The End" << endl;
 	//while (strQ != strA);
 }
+//1.문자열 더하기 
+//2.문자열 비교(같다, 다르다)
+//3.문자배열 테스트
+//4.문자입력/출력
+void STDStringOperatorTestMain()
+{
+	string strLastName = "k";
+	string strFirstName= "hg";
+	
+	//cout << "LastName:";
+	//cin >> strLastName;
+	//cout << "FristName:";
+	//cin >> strFirstName;
+
+	cout << "LastName:";
+	for (int i = 0; i < strLastName.size(); i++) 
+		cout << strLastName[i]; 
+	cout << endl;
+	cout << "FirstName:";
+	for (int i = 0; i < strFirstName.size(); i++)
+		cout << strFirstName[i];
+	cout << endl;
+
+	string strKrFullName = strLastName + strFirstName;
+	cout << "KrFullName:" << strKrFullName.c_str() << endl;
+	//cout << "KrFullName:" << strKrFullName << endl;
+
+	string strEnFullName = strFirstName + strKrFullName;
+	cout << "EnFullName:" << strKrFullName.c_str() << endl;
+	//cout << "EnFullName:" << strKrFullName << endl;
+}
 
 namespace Mockup
 {
@@ -47,20 +78,23 @@ namespace Mockup
 	{
 		char* m_pStr;
 	public:
-		string(const char* text)
+		string(const char* text = nullptr)
 		{
-			int nSize = strlen(text);
-			nSize++;
-			m_pStr = new char[nSize];
-			strcpy_s(m_pStr, nSize , text);
-			cout << "string[" << this << "/" << (int)this->c_str() << "]:" << this->c_str() << endl;
+			if (text)
+			{
+				int nSize = strlen(text);
+				nSize++;
+				m_pStr = new char[nSize];
+				strcpy_s(m_pStr, nSize, text);
+				cout << "string[" << this << "/" << (int)this->c_str() << "]:" << this->c_str() << endl;
+			}
 		}
 		~string()
 		{
 			cout << "~string[" << this << "/" << (int)this->c_str() << "]:" << this->c_str() << endl;
 			delete[] m_pStr;
 		}
-		string(string& str)
+		string(string&& str)
 		{
 			//*this = str;
 			int nSize = strlen(str.c_str());
@@ -73,6 +107,57 @@ namespace Mockup
 		const char* c_str()
 		{
 			return m_pStr;
+		}
+
+		//행맨게임 추가내용
+		int find(char c)
+		{
+			return  -1;
+		}
+		int replace(int idx, int size, int count, char c)
+		{
+			return -1;
+		}
+		bool _Equal(string str)
+		{
+			return !strcmp(this->m_pStr, str.c_str());
+		}
+
+		//연산자오버로딩 추가사항.
+		int size()
+		{
+			return 0;
+		}
+
+		string operator+(const string& str)
+		{
+			string strTemp;
+			return strTemp;
+		}
+
+		bool operator==(const string& str)
+		{
+			return false;
+		}
+
+		bool operator!=(const string& str)
+		{
+			return false;
+		}
+
+		char operator[](int idx)
+		{
+			return m_pStr[idx];
+		}
+
+		friend ostream& operator<< (ostream& os, string& s)
+		{
+			return os << s;
+		}
+
+		friend istream& operator>> (istream& is, string& s)
+		{
+			return is >> s;
 		}
 	};
 }
@@ -90,31 +175,62 @@ void MockupStringMain()
 	cout << "CopyMsg[" << &strCopyMsg << "/" << (int)strCopyMsg.c_str() << "]:" << strCopyMsg.c_str() << endl;
 }
 
-//void MockupHangManGameMain()
-//{
-//	Mockup::string strQ = "____";
-//	Mockup::string strA = "GAME";
-//	char cInput;
-//
-//	do
-//	{
-//		cout << "Q:" << strQ.c_str() << endl;
-//		cin >> cInput;
-//
-//		int idx = strA.find(cInput);
-//		if (idx == -1)
-//		{
-//			cout << cInput.c_str() << "is not found!" << endl;
-//		}
-//		else
-//		{
-//			strQ.replace(idx, 1, 1, cInput);
-//			//strQ[idx] = cInput;
-//		}
-//	} 	while (!strQ._Equal(strA));
-//	cout << "The End" << endl;
-//	//while (strQ != strA);
-//}
+void MockupHangManGameMain()
+{
+	Mockup::string strQ = "____";
+	Mockup::string strA = "GAME";
+	char cInput;
+
+	do
+	{
+		cout << "Q:" << strQ.c_str() << endl;
+		cin >> cInput;
+
+		int idx = strA.find(cInput);
+		if (idx == -1)
+		{
+			cout << cInput << "is not found!" << endl;
+		}
+		else
+		{
+			strQ.replace(idx, 1, 1, cInput);
+			//strQ[idx] = cInput;
+		}
+	} 	while (!strQ._Equal(strA));
+	cout << "The End" << endl;
+	//while (strQ != strA);
+}
+//1.문자열 더하기 
+//2.문자열 비교(같다, 다르다)
+//3.문자배열/길이 테스트
+//4.문자입력/출력
+void MockupStringOperatorTestMain()
+{
+	Mockup::string strLastName = "k";
+	Mockup::string strFirstName = "hg";
+
+	//cout << "LastName:";
+	//cin >> strLastName;
+	//cout << "FristName:";
+	//cin >> strFirstName;
+
+	cout << "LastName:";
+	for (int i = 0; i < strLastName.size(); i++)
+		cout << strLastName[i];
+	cout << endl;
+	cout << "FirstName:";
+	for (int i = 0; i < strFirstName.size(); i++)
+		cout << strFirstName[i];
+	cout << endl;
+
+	Mockup::string strKrFullName = strLastName + strFirstName;
+	cout << "KrFullName:" << strKrFullName.c_str() << endl;
+	//cout << "KrFullName:" << strKrFullName << endl;
+
+	Mockup::string strEnFullName = strFirstName + strKrFullName;
+	cout << "EnFullName:" << strKrFullName.c_str() << endl;
+	//cout << "EnFullName:" << strKrFullName << endl;
+}
 
 void main()
 {
