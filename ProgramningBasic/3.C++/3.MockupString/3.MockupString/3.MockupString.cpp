@@ -63,11 +63,14 @@ void STDStringOperatorTestMain()
 		cout << strFirstName[i];
 	cout << endl;
 
-	string strKrFullName = strLastName + strFirstName;
+	string strKrFullName = strLastName.append(strFirstName);
+	//string strKrFullName = strLastName + strFirstName;
 	cout << "KrFullName:" << strKrFullName.c_str() << endl;
 	//cout << "KrFullName:" << strKrFullName << endl;
 
-	string strEnFullName = strFirstName + strKrFullName;
+
+	string strEnFullName = strFirstName.append(strKrFullName);
+	//string strEnFullName = strFirstName + strKrFullName;
 	cout << "EnFullName:" << strKrFullName.c_str() << endl;
 	//cout << "EnFullName:" << strKrFullName << endl;
 }
@@ -86,13 +89,22 @@ namespace Mockup
 				nSize++;
 				m_pStr = new char[nSize];
 				strcpy_s(m_pStr, nSize, text);
-				cout << "string[" << this << "/" << (int)this->c_str() << "]:" << this->c_str() << endl;
 			}
+			cout << "string[" << this << "/" << (int)this->c_str() << "]:" << this->c_str() << endl;
 		}
 		~string()
 		{
 			cout << "~string[" << this << "/" << (int)this->c_str() << "]:" << this->c_str() << endl;
 			delete[] m_pStr;
+		}
+		string(string& str)
+		{
+			//*this = str;
+			int nSize = strlen(str.c_str());
+			nSize++;
+			m_pStr = new char[nSize];
+			strcpy_s(m_pStr, nSize, str.c_str());
+			cout << "copy string(&)[" << this << "/" << (int)this->c_str() << "]:" << this->c_str() << endl;
 		}
 		string(string&& str)
 		{
@@ -101,7 +113,7 @@ namespace Mockup
 			nSize++;
 			m_pStr = new char[nSize];
 			strcpy_s(m_pStr, nSize, str.c_str());
-			cout << "string[" << this << "/" << (int)this->c_str() << "]:" << this->c_str() << endl;
+			cout << "copy string(&&)[" << this << "/" << (int)this->c_str() << "]:" << this->c_str() << endl;
 		}
 
 		const char* c_str()
@@ -112,13 +124,13 @@ namespace Mockup
 		//행맨게임 추가내용
 		int find(char c)
 		{
-			return  -1;
+			return  strchr(m_pStr, c) - m_pStr;
 		}
 		int replace(int idx, int size, int count, char c)
 		{
-			return -1;
+			return *(m_pStr + idx + size + count) = c;
 		}
-		bool _Equal(string str)
+		bool _Equal(string& str)
 		{
 			return !strcmp(this->m_pStr, str.c_str());
 		}
@@ -126,7 +138,7 @@ namespace Mockup
 		//연산자오버로딩 추가사항.
 		int size()
 		{
-			return 0;
+			return strlen(m_pStr);
 		}
 
 		string operator+(const string& str)
@@ -237,5 +249,7 @@ void main()
 	//STDStringMain();
 	//MockupStringMain();
 	//STDHangManGameMain();
-	MockupStringMain();
+	//MockupStringMain();
+	STDStringOperatorTestMain();
+	MockupStringOperatorTestMain();
 }
