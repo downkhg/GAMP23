@@ -11,6 +11,18 @@ public:
         this->x = x;
         this->y = y;
     }
+    //연산자오버로딩: 객체를 이용하여 연산자를 활용할때 호출하는 함수.
+    //연산결과 타입(리턴값) 연산자(함수명) 오른쪽 변수타입(매개변수)
+    float operator[](int idx)
+    {
+        if (idx == 0) return x;
+        else return y;
+    }
+    float operator[](char ch)
+    {
+        if (ch == 'x') return x;
+        else if(ch == 'y') return y;
+    }
     Vector operator+(Vector v)
     {
         return Vector(x + v.x, y + v.y);
@@ -41,6 +53,7 @@ public:
         return (x == v.x && y == v.y);
     }
 };
+
 //벡터의 연산이 맞는지 각 연산들이 정상작동하는지 출력과 비교를 통해 검증한다.
 //빼기: 위치B - 위치A = 벡터(방향이 있는 이동량)
 //더하기 : 위치 + 벡터 = 이동
@@ -54,6 +67,11 @@ void VectorTestMain()
     Vector vEndPos(10, 0); //디폴트매개변수이므로 값을 변경하고 싶다면 바로 변경가능하다.
     vPos.Display("vPos");
     vEndPos.Display("vEndPos");
+
+    cout << "vEndPos.x:" << vEndPos[0] << endl;
+    cout << "vEndPos.y:" << vEndPos[1] << endl;
+    cout << "vEndPos.x:" << vEndPos['x'] << endl;
+    cout << "vEndPos.y:" << vEndPos['y'] << endl;
 
     Vector vDist = vEndPos - vPos; //현재위치에서 도착할 위치를 빼서 거리(벡터)를 구한다.
     vDist.Display("vDist");

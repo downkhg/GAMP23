@@ -49,11 +49,6 @@ void STDStringOperatorTestMain()
 	string strLastName = "k";
 	string strFirstName= "hg";
 	
-	//cout << "LastName:";
-	//cin >> strLastName;
-	//cout << "FristName:";
-	//cin >> strFirstName;
-
 	cout << "LastName:";
 	for (int i = 0; i < strLastName.size(); i++) 
 		cout << strLastName[i]; 
@@ -63,16 +58,11 @@ void STDStringOperatorTestMain()
 		cout << strFirstName[i];
 	cout << endl;
 
-	string strKrFullName = strLastName.append(strFirstName);
-	//string strKrFullName = strLastName + strFirstName;
+	string strKrFullName = strLastName + strFirstName;
 	cout << "KrFullName:" << strKrFullName.c_str() << endl;
-	//cout << "KrFullName:" << strKrFullName << endl;
 
-
-	string strEnFullName = strFirstName.append(strKrFullName);
-	//string strEnFullName = strFirstName + strKrFullName;
+	string strEnFullName = strFirstName + strKrFullName;
 	cout << "EnFullName:" << strKrFullName.c_str() << endl;
-	//cout << "EnFullName:" << strKrFullName << endl;
 }
 
 namespace Mockup
