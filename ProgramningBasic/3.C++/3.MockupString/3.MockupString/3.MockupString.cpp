@@ -114,11 +114,15 @@ namespace Mockup
 		//행맨게임 추가내용
 		int find(char c)
 		{
-			return  strchr(m_pStr, c) - m_pStr;
+			for (int i = 0; i < size(); i++)
+				if (m_pStr[i] == c)
+					return i;
+
+			//return  strchr(m_pStr, c) - m_pStr;
 		}
 		int replace(int idx, int size, int count, char c)
 		{
-			return *(m_pStr + idx + size + count) = c;
+			return *(m_pStr + idx + size * count - 1) = c;
 		}
 		bool _Equal(string& str)
 		{
@@ -131,28 +135,32 @@ namespace Mockup
 			return strlen(m_pStr);
 		}
 
-		string operator+(const string& str)
+		string operator+(string& str)
 		{
-			string strTemp;
+			int nSize = size() + str.size() + 1;
+			char* pTempStr = new char[nSize];
+			sprintf_s(pTempStr, nSize, "%s%s", this->m_pStr, str.m_pStr);
+			//sprintf(pTempStr, "%s%s", m_pStr, str.m_pStr);
+			string strTemp(pTempStr);
+			delete[] pTempStr;
 			return strTemp;
 		}
 
-		bool operator==(const string& str)
+		bool operator==(string& str)
 		{
-			return false;
+			return _Equal(str);
 		}
 
-		bool operator!=(const string& str)
+		bool operator!=(string& str)
 		{
-			return false;
+			return !(*this == str);
 		}
 
-		char operator[](int idx)
+		char& operator[](int idx)
 		{
 			return m_pStr[idx];
 		}
-
-		friend ostream& operator<< (ostream& os, string& s)
+		/*friend ostream& operator<< (ostream& os, string& s)
 		{
 			return os << s;
 		}
@@ -160,7 +168,7 @@ namespace Mockup
 		friend istream& operator>> (istream& is, string& s)
 		{
 			return is >> s;
-		}
+		}*/
 	};
 }
 
@@ -189,14 +197,15 @@ void MockupHangManGameMain()
 		cin >> cInput;
 
 		int idx = strA.find(cInput);
+		cout << "idx:" << idx << endl;
 		if (idx == -1)
 		{
 			cout << cInput << "is not found!" << endl;
 		}
 		else
 		{
-			strQ.replace(idx, 1, 1, cInput);
-			//strQ[idx] = cInput;
+			//strQ.replace(idx, 1, 1, cInput);
+			strQ[idx] = cInput;
 		}
 	} 	while (!strQ._Equal(strA));
 	cout << "The End" << endl;
@@ -229,8 +238,8 @@ void MockupStringOperatorTestMain()
 	cout << "KrFullName:" << strKrFullName.c_str() << endl;
 	//cout << "KrFullName:" << strKrFullName << endl;
 
-	Mockup::string strEnFullName = strFirstName + strKrFullName;
-	cout << "EnFullName:" << strKrFullName.c_str() << endl;
+	Mockup::string strEnFullName = strFirstName + strLastName;
+	cout << "EnFullName:" << strEnFullName.c_str() << endl;
 	//cout << "EnFullName:" << strKrFullName << endl;
 }
 
@@ -239,7 +248,7 @@ void main()
 	//STDStringMain();
 	//MockupStringMain();
 	//STDHangManGameMain();
-	//MockupStringMain();
-	STDStringOperatorTestMain();
+	//MockupHangManGameMain();
+	//STDStringOperatorTestMain();
 	MockupStringOperatorTestMain();
 }
