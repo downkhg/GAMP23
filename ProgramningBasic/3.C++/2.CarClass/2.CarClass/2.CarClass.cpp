@@ -235,14 +235,15 @@ void StaticLocalCarTestMain()
 		StaticLocalCar();
 	cout << "StaticLocalCarTestMain End" << endl;
 }
-
+//c++에서는 객체와 인스턴스를 구별할수없다. 객체는 만들어진 메모리를 의미하기때문.
+//보통객체지향언어 객체(인스턴스를 참조하는 변수 = 포인터), 인스턴스(동적할당된 객체)라고 부른다.
 void DynamicAllocateTestMain()
 {
 	cout << "DynamicAllocateTestMain 1 - "<< CCar::GetCount() << endl;//클래스의 이름으로 접근하므로 객체생성여부와 상관없이 사용가능하다.
-	CCar* pCar = NULL;
+	CCar* pCar = NULL;//보통 객체지향언어에서 객체
 	//cout << "DynamicAllocateTestMain 2 - "<< pCar->GetCount() << endl; //문법은 사용가능하나, 일반멤버에 접근하면 런타임 오류가 나므로 주의해한다.
 	cout << "DynamicAllocateTestMain 2 - " << CCar::GetCount() << endl; 
-	pCar = new CCar();
+	pCar = new CCar();//보통 객체지향언어에서 인스턴스
 	delete pCar;
 	cout << "DynamicAllocateTestMain 3 - " << CCar::GetCount() << endl;
 	pCar = new CCar[3];
