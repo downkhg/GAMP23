@@ -111,10 +111,15 @@ void SimulateUnityTestMain()
 	GameObject objPlayer("Player");
 	GameObject objEagle("Eagle");
 
-	vector<GameObject*> listGameObjects(2);
+	vector<GameObject*> listGameObjects(3);
 
 	listGameObjects[0] = &objPlayer;
 	listGameObjects[1] = &objEagle;
+	//java나 c#에서는 클래스는 반드시 동적할당된다. 가비지컬랙션이 동적할당된 메모리가 사용되지않을때 자동으로 해제한다.(스마트포인터)
+	//객체: 동적할당된 메모리를 가르키는 포인터, 인스턴스: 동적할당된 메모리
+	listGameObjects[2] = new GameObject("Opossum");
+	delete listGameObjects[2]; 
+	//delete listGameObjects[1]; //정적할당된 메모리를 지울수없다.
 
 	cout << "###### " << objPlayer.GetName() <<".Add Componet ######"<< endl;
 	objPlayer.AddComponent(new Player());

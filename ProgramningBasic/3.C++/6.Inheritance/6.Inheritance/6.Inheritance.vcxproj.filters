@@ -15,13 +15,8 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="5.SimulateUnity.cpp">
+    <ClCompile Include="6.Inheritance.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd">
-      <Filter>리소스 파일</Filter>
-    </None>
   </ItemGroup>
 </Project>
