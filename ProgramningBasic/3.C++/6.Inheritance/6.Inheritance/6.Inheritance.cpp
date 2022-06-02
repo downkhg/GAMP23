@@ -275,10 +275,183 @@ namespace DiamondInhartance
 		cAutoBike.Enginer::SetGear(0);
 	}
 }
+
+class Spiker
+{
+	bool m_bPower;
+	float m_fVolume;
+public:
+	Spiker()
+	{
+		m_bPower = false;
+		m_fVolume = 0;
+		cout << typeid(*this).name() << "[" << this << "](" << &m_bPower << "," << &m_fVolume << "):" << sizeof(*this) << endl;
+	}
+	void SwitchOn()
+	{
+		m_bPower = true;
+		cout << typeid(*this).name() << "::SwitchOn(" << m_bPower << ")" << endl;
+	}
+	void SwitchOff()
+	{
+		m_bPower = false;
+		cout << typeid(*this).name() << "::SwitchOff(" << m_bPower << ")" << endl;
+	}
+	void VolumeUp()
+	{
+		m_fVolume++;
+		cout << typeid(*this).name() << "::VolumeUp(" << m_fVolume << ")" << endl;
+	}
+	void VolumeDown()
+	{
+		m_fVolume--;
+		cout << typeid(*this).name() << "::VolumeDown(" << m_fVolume << ")" << endl;
+	}
+};
+
+class Antena
+{
+	float m_fHertz = 0;
+public:
+	Antena()
+	{
+		m_fHertz = 0;
+		cout << typeid(*this).name() << "[" << this << "]:" << sizeof(*this) << endl;
+	}
+	void HertzUp()
+	{
+		m_fHertz++;
+		cout << typeid(*this).name() << "::HertzUp(" << m_fHertz << ")" << endl;
+	}
+	void HertzDown()
+	{
+		m_fHertz--;
+		cout << typeid(*this).name() << "::HertzDown(" << m_fHertz << ")" << endl;
+	}
+};
+//is-a: 상속을 이용하면 코드를 거이 작성하지않고 만들수있다.
+namespace IsA
+{
+	class Radio : public Spiker, public Antena
+	{
+	public:
+		Radio() 
+		{ 
+			cout << typeid(*this).name() << "[" << this << "]:" << sizeof(*this) << endl;
+		}
+	};
+
+	void RadioMain()
+	{
+		Radio cRadio; //라디오를 만들수있다. 그러나 내부부품은 재활용할수없다.
+
+		cRadio.SwitchOn();
+		cRadio.VolumeUp();
+		cRadio.HertzDown();
+		cRadio.SwitchOff();
+	}
+}
+//has-a: 각 객체를 감싸는 함수를 만들어한다.
+//만들때 내부의 부품을 더 좋은 부품을 사용할수있다.
+//(현실에 라디오라면 직접 인터페이스를 내부에 보드에 연결하므로 여기에 해당될수도 있다.)
+namespace HasA
+{
+	//해당문법은 is-a만큼 범용성이 없으므로 잘사용되지않는다.
+	/*class Radio
+	{
+		Spiker m_cSpiker;
+		Antena m_cAntena;
+	public:
+		Radio()
+		{
+			cout << typeid(*this).name() << "[" << this << "]:" << sizeof(*this) << endl;
+		}
+	};*/
+
+	class Radio
+	{
+		Spiker* m_pSpiker;
+		Antena* m_pAntena;
+	public:
+		void SetSpiker(Spiker* pSpiker)
+		{
+			m_pSpiker = pSpiker;
+		}
+		Spiker* SetSpiker()
+		{
+			return m_pSpiker;
+		}
+		void SetAntena(Antena* pAntena)
+		{
+			m_pAntena = pAntena;
+		}
+		Antena* SetAntenar()
+		{
+			return m_pAntena;
+		}
+	public:
+		Radio(Spiker* spiker, Antena* antena)
+		{
+			m_pSpiker = spiker;
+			m_pAntena = antena;
+			cout << typeid(*this).name() << "[" << this << "]("<< m_pSpiker<<","<<m_pAntena<< "):" << sizeof(*this) << endl;
+		}
+		void SwitchOn()
+		{
+			cout << typeid(*this).name() << "::SwitchOn()" << endl;
+			m_pSpiker->SwitchOn();
+		}
+		void SwitchOff()
+		{
+			cout << typeid(*this).name() << "::SwitchOff()" << endl;
+			m_pSpiker->SwitchOff();
+		}
+		void VolumeUp()
+		{
+			cout << typeid(*this).name() << "::VolumeUp()" << endl;
+			m_pSpiker->VolumeUp();
+		}
+		void VolumeDown()
+		{
+			cout << typeid(*this).name() << "::VolumeDown()" << endl;
+			m_pSpiker->VolumeDown();
+		}
+		void HertzUp()
+		{
+			cout << typeid(*this).name() << "::HertzUp()" << endl;
+			m_pAntena->HertzUp();
+		}
+		void HertzDown()
+		{
+			cout << typeid(*this).name() << "::HertzDown()" << endl;
+			m_pAntena->HertzDown();
+		}
+	};
+
+	void RadioMain()
+	{
+		Spiker* pSpiker = new Spiker();
+		Antena* pAntena = new Antena();
+
+		//라디오를 조립할때 부품을 선택할수있고, 재활용이 가능하다.
+		Radio cRadio(pSpiker, pAntena);
+		//Radio cRadio(new Spiker(), new Antena()); //이렇게 사용하는 경우 객체내부에 포함된다.
+		cRadio.SetSpiker()->SwitchOn();
+		cRadio.SwitchOn();
+		cRadio.VolumeUp();
+		cRadio.HertzDown();
+		cRadio.SwitchOff();
+
+		delete pSpiker;
+		delete pAntena;
+	}
+}
 void main()
 {
 	//ShapeMain();
 	//Inheritance::CarMain();
 	//HierarchyInheritance::CarMain();
-	DiamondInhartance::CarMain();
+	//DiamondInhartance::CarMain();
+	IsA::RadioMain();
+	//HasA::RadioMain();
 }
