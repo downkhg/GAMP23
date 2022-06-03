@@ -21,6 +21,10 @@
   <ItemGroup>
     <ClCompile Include="7.Polymorphism.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="InheritanceShape.h" />
+    <ClInclude Include="PolymorphismShape.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
