@@ -6,13 +6,15 @@ using namespace std;
 
 class Component
 {
-	virtual void Start() = 0;
-	virtual void Update() = 0;
-public:
-	Component() { cout << typeid(*this).name() << "[" << this << "]" << endl; }
-	virtual ~Component() { cout << "~" << typeid(*this).name() << "[" << this << "]" << endl; }
 
-	bool operator==(const char* typeidname)
+public:
+	virtual void Start() = 0;//순수가상함수
+	virtual void Update() = 0;
+
+	Component() { cout << typeid(*this).name() << "[" << this << "]" << endl; }
+	virtual ~Component() { cout << "~" << typeid(*this).name() << "[" << this << "]" << endl; }//가상소멸자
+
+	bool operator==(const char* typeidname)//대입연산자
 	{
 		return !strcmp(typeid(*this).name(), typeidname);
 	}
@@ -51,6 +53,13 @@ public:
 	} 
 	//Component* GetComponent(const char* typeidname){ return *find(m_listScrits.begin(), m_listScrits.end(), typeidname); }
 	string GetName(){ return m_strName; }
+
+	void Start() 
+	{
+		for (list<Component*>::iterator it = m_listScrits.begin(); it != m_listScrits.end(); it++)
+			(*it)->Sta
+	};
+	void Update();
 };
 
 class TargetTracker : public Component
@@ -121,6 +130,9 @@ void SimulateUnityTestMain()
 	delete listGameObjects[2]; 
 	//delete listGameObjects[1]; //정적할당된 메모리를 지울수없다.
 
+	for (int i = 0; i < listGameObjects.size(); i++)
+		listGameObjects[i]->Start();
+
 	cout << "###### " << objPlayer.GetName() <<".Add Componet ######"<< endl;
 	objPlayer.AddComponent(new Player());
 
@@ -132,6 +144,11 @@ void SimulateUnityTestMain()
 	TargetTracker* pTargetTarcker = dynamic_cast<TargetTracker*> (objEagle.GetComponent(typeid(TargetTracker).name()));
 
 	pTargetTarcker->SetTarget(&objPlayer);
+
+
+	for (int i = 0; i < listGameObjects.size(); i++)
+		listGameObjects[i]->Update();
+
 	cout << "###### SimulateUnityTestMain() End ######" << endl;
 }
 
