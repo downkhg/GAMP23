@@ -22,6 +22,7 @@ namespace Virtual
 		}
 	};
 	//추상클래스: 순수가상함수를 1개이상 가진 클래스. 객체화가 불가능하다.
+	//실체화: 추상클래스를 상속받아서 객체화 가능한 클래스를 만드는것.
 	class Shape 
 	{
 	public:
@@ -29,7 +30,8 @@ namespace Virtual
 		{
 			cout << "Shape[" << this << "]" << sizeof(*this) << endl;
 		}
-		~Shape()
+		//virtual ~Shape() = 0 //순수가상소멸자(?) 문법은 가능하지만, 실제로 원하는 대로 작동하지않는 코드이므로. 순수 가상소멸자라는 개념은 존재하지않는다.
+		virtual ~Shape() = 0//가상소멸자
 		{
 			cout << "~Shape[" << this << "]" << endl;
 		}
