@@ -57,6 +57,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             DispatchMessage(&msg);
         }
     }
+
+   // while(true) { _cwprintf(L"##### wWinMain While 2 #####\n"); }
     _cwprintf(L"##### wWinMain End #####\n");
     FreeConsole();
     return (int) msg.wParam;
@@ -170,7 +172,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         break;
     case WM_DESTROY:
         _cwprintf(L"##### WndProcw.WM_DESTROY()  #####\n");
-        //PostQuitMessage(0);
+        PostQuitMessage(0);
         break;
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);
