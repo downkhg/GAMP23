@@ -65,7 +65,7 @@ public:
 	string strComment;
 	Status sFuction;
 	int nGold;
-	Item(E_ITEM_KIND kind, string name, string comment, Status status, int gold)
+	Item(E_ITEM_KIND kind = WEAPON, string name = "test", string comment = "test", Status status = Status(), int gold = 0)
 	{
 		Set(kind, name, comment, status, gold);
 	}
@@ -110,6 +110,7 @@ class Player {
 	int m_nExp;
 
 	vector<Item> m_listIventory;
+	vector<Item> m_listEqument;
 public:
 	void SetIventory(Item item)
 	{
@@ -129,6 +130,29 @@ public:
 		Set(strName, _hp, _mp, _str, _int, _def, _exp);
 	}
 
+
+	bool UseItem(int idx)
+	{
+		Item cItem = GetIventoryIdx(idx);
+
+		if (cItem.eItemKind == Item::E_ITEM_KIND::ETC)
+			return false;
+
+		int nIdx = cItem.eItemKind;
+		m_listEqument[nIdx] = cItem;
+		m_sStatus = m_sStatus + cItem.sFuction;
+		DeleteIventory(idx);
+
+		return true;
+	}
+
+	void ReleaseEqument(int idx)
+	{
+		Item cItem = m_listEqument[idx];
+		m_sStatus = m_sStatus - cItem.sFuction;
+		SetIventory(cItem);
+	}
+
 	void Set(string strName, int _hp, int _mp, int _str, int _int, int _def, int _exp)
 	{
 		m_strName = strName;
@@ -139,6 +163,8 @@ public:
 		m_sStatus.nDef = _def;
 		m_nExp = _exp;
 		m_nLv = 1;
+
+		m_listEqument.resize(3);
 	}
 
 	void Attack(Player& taget)
@@ -184,49 +210,130 @@ public:
 		cout << "######### Inventory ######### " << endl;
 		for (int i = 0; i < m_listIventory.size(); i++)
 			cout << i << ":" << m_listIventory[i].strName << endl;
+		cout << "######### Equiment ######### " << endl;
+		for (int i = 0; i < m_listEqument.size(); i++)
+			cout << i << ":" << m_listEqument[i].strName << endl;
 	}
 };
 
 void main()
 {
-	Player cPlayer("Player");
-	Player cMonster("Monster");
+	enum E_STAGE { EXIT = -1, CRATE, IVENTORY, TOWN, FILED, BATTLE, GAME_OVER, THE_END, MAX };
+	const char* strStageName[] = { "CRATE", "INVENTORY","TOWN", "FILED", "BATTLE", "GAME_OVER", "THE_END" };
+
+	enum E_MONSTER { SILME, SKELETON, BOSS, MON_MAX };
+
+	const char* strMonsterName[] = { "SILME", "SKELETON", "BOSS" };
+
+	int eStage = E_STAGE::CRATE;
+
 	ItemManager cItemManager;
-	//몬스터의 인벤토리에 포션을 추가하고, 
-	//Item cHpPotion = Item(Item::E_ITEM_KIND::ETC, "HP포션", "HP회복", Status(100), 100);
-	Item cHpPotion = cItemManager.GetItem(ItemManager::E_ITEM_LIST::HP_POTION);
-	cMonster.SetIventory(cHpPotion);
+	Player cPlayer;
+	Player cMonster;
 
-	while (!cPlayer.Dead() && !cMonster.Dead())//둘중하나가 죽었을때 전투가 종료된다. -> 둘다 살아있으면 전투를한다.
+	cPlayer.SetIventory(cItemManager.GetItem(ItemManager::E_ITEM_LIST::WOOD_SOWRD));
+	cPlayer.SetIventory(cItemManager.GetItem(ItemManager::E_ITEM_LIST::WOOD_ARMOR));
+	cPlayer.SetIventory(cItemManager.GetItem(ItemManager::E_ITEM_LIST::WOOD_RING));
+
+	cMonster.Set("Slime", 100, 100, 20, 10, 10, 100);
+	cMonster.SetIventory(cItemManager.GetItem(ItemManager::E_ITEM_LIST::WOOD_SOWRD));
+	//cMonster.SetIventory(Item(Item::E_ITEM_KIND::WEAPON, "목검", "데미지 증가", Status(0, 0, 10), 100));
+
+	while (eStage != E_STAGE::EXIT)
 	{
-		//if (cPlayer.Dead() || cMonster.Dead()) break;
-		if (!cPlayer.Dead())
+		switch (eStage)
 		{
-			cPlayer.Attack(cMonster);
-			cMonster.Show();
+		case E_STAGE::CRATE:
+		{
+			string name;
+			cout << "케릭터 이름을 입력하세요!:";
+			cin >> name;
+			cPlayer.Set(name, 100, 100, 20, 10, 10, 0);
+			eStage = E_STAGE::TOWN;
 		}
-		else
+		break;
+		case E_STAGE::IVENTORY:
 		{
-			cout << "Monster Win !!" << endl;
-			cMonster.StillExp(cPlayer);
-			if (cMonster.LvUp())
-				cout << "Lv Up!!" << endl;
-			cMonster.Show();
-		}
-
-		if (!cMonster.Dead())
-		{
-			cMonster.Attack(cPlayer);
 			cPlayer.Show();
+			int nSelect;
+			cout << "메뉴를 선택하세요!(1: 아이템사용. 2: 장비해제 etc: 마을):";
+			cin >> nSelect;
+			if (nSelect == 1)
+			{
+				cout << "사용할 아이템을 구하세요!:";
+				cin >> nSelect;
+				cout << "Select:" << nSelect << endl;
+				if (!cPlayer.UseItem(nSelect))
+					cout << "사용할수없습니다!" << endl;
+			}
+			else if (nSelect == 2)
+			{
+				cout << "장비해제할 장비함에서 선택하세요!:";
+				cin >> nSelect;
+				cPlayer.ReleaseEqument(nSelect);
+			}
+			else
+				eStage = E_STAGE::TOWN;
 		}
-		else//몬스터를 잡으면, 포션을 획득한다.(몬스터의 첫번째 인벤토리에서 아이템을 뺏어온다.)
+		case E_STAGE::TOWN:
 		{
-			cout << "Player Win !!" << endl;
-			cPlayer.StillExp(cMonster);
-			cPlayer.StillItem(cMonster);
-			if (cPlayer.LvUp())
-				cout << "Lv Up!!" << endl;
-			cPlayer.Show();
+			cout << "마을 입니다." << endl;
+			cout << "어디로 가시겠습니까?" << endl;
+			for (int i = 0; i < E_STAGE::MAX; i++)
+				cout << i << ":" << strStageName[i] << ",";
+			cin >> eStage;
 		}
+		break;
+		case E_STAGE::FILED:
+		{
+			int nSelect;
+			cout << "어디로 가시겠습니까?";
+			for (int i = 0; i < E_MONSTER::MON_MAX; i++)
+				cout << i << ":" << strMonsterName[i] << ",";
+			cin >> nSelect;
+			switch (nSelect)
+			{
+			case E_MONSTER::SILME:
+				cMonster.Set("Slime", 100, 100, 20, 10, 10, 100);
+				break;
+			case E_MONSTER::SKELETON:
+				cMonster.Set("Skeleton", 200, 200, 30, 10, 10, 100);
+				break;
+			case E_MONSTER::BOSS:
+				cMonster.Set("Boss", 300, 100, 50, 10, 10, 100);
+				break;
+			}
+			eStage = E_STAGE::BATTLE;
+		}
+		break;
+		case E_STAGE::BATTLE:
+		{
+			if (cPlayer.Dead() == false)
+				cPlayer.Attack(cMonster);
+			else
+			{
+				eStage = GAME_OVER;
+			}
+			cMonster.Show();
+			if (cMonster.Dead() == false)
+				cMonster.Attack(cPlayer);
+			else
+			{
+				cPlayer.StillItem(cMonster);
+				if (cPlayer.LvUp())
+					cout << "랩업!" << endl;
+				eStage = TOWN;
+			}
+		}
+		break;
+		case E_STAGE::GAME_OVER:
+			printf("GAME\OVER");
+			break;
+		case E_STAGE::THE_END:
+			printf("THE EMD");
+			break;
+		default:
+			break;
+		}	
 	}
 }
