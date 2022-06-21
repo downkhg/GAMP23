@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -56,12 +57,50 @@ struct Status {
 	}
 };
 
+class Item {
+public:
+	enum E_ITEM_KIND { WEAPON, ARMOR, ACC, ETC };
+	E_ITEM_KIND eItemKind;
+	string strName;
+	string strComment;
+	Status sFuction;
+	int nGold;
+	Item(E_ITEM_KIND kind, string name, string comment, Status status, int gold)
+	{
+		Set(kind, name, comment, status, gold);
+	}
+	void Set(E_ITEM_KIND kind, string name, string comment, Status status, int gold)
+	{
+		eItemKind = kind;
+		strName = name;
+		strComment = comment;
+		sFuction = status;
+		nGold = gold;
+	}
+};
+
+
+
 class Player {
 	string m_strName;
 	Status m_sStatus;
 	int m_nLv;
 	int m_nExp;
 
+	vector<Item> m_listIventory;
+public:
+	void SetIventory(Item item)
+	{
+		m_listIventory.push_back(item);
+	}
+	Item GetIventoryIdx(int idx)
+	{
+		return m_listIventory[idx];
+	}
+	void DeleteIventory(int idx)
+	{
+		m_listIventory.erase(m_listIventory.begin() + idx);
+	}
 public:
 	Player(string strName = "none", int _hp = 100, int _mp = 100, int _str = 20, int _int = 10, int _def = 10, int _exp = 0)
 	{
@@ -122,6 +161,10 @@ void main()
 {
 	Player cPlayer("Player");
 	Player cMonster("Monster");
+
+	//몬스터의 인벤토리에 포션을 추가하고, 
+	//몬스터를 잡으면, 포션을 획득한다.
+	//(몬스터의 첫번째 인벤토리에서 아이템을 뺏어온다.)
 
 	while (!cPlayer.Dead() && !cMonster.Dead())//둘중하나가 죽었을때 전투가 종료된다. -> 둘다 살아있으면 전투를한다.
 	{
