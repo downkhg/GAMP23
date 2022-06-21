@@ -79,7 +79,29 @@ public:
 	}
 };
 
-
+class ItemManager {
+	vector<Item> m_listItems;
+public:
+	enum E_ITEM_LIST { WOOD_SOWRD, BONE_SOWRD, WOOD_ARMOR, BONE_AMROR, WOOD_RING, BONE_RING, HP_POTION, MP_POTION, STONE, BOOM };
+	ItemManager()
+	{
+		m_listItems.resize(10);
+		m_listItems[0] = Item(Item::E_ITEM_KIND::WEAPON, "목검", "데미지 증가", Status(0, 0, 10), 100);
+		m_listItems[1] = Item(Item::E_ITEM_KIND::WEAPON, "본소드", "데미지 증가", Status(0, 0, 20), 100);
+		m_listItems[2] = Item(Item::E_ITEM_KIND::ARMOR, "나무갑옷", "방어력 증가", Status(0, 0, 0, 10), 100);
+		m_listItems[3] = Item(Item::E_ITEM_KIND::ARMOR, "본아머", "방어력 증가", Status(0, 0, 20), 100);
+		m_listItems[4] = Item(Item::E_ITEM_KIND::ACC, "나무반지", "체력 증가", Status(10), 100);
+		m_listItems[5] = Item(Item::E_ITEM_KIND::ACC, "해골반지", "체력 증가", Status(20), 100);
+		m_listItems[6] = Item(Item::E_ITEM_KIND::ETC, "힐링포션", "HP회복", Status(100), 100);
+		m_listItems[7] = Item(Item::E_ITEM_KIND::ETC, "마나포션", "MP회복", Status(0, 100), 100);
+		m_listItems[8] = Item(Item::E_ITEM_KIND::ETC, "짱돌", "단일 적 대미지", Status(0, 0, 50), 100);
+		m_listItems[9] = Item(Item::E_ITEM_KIND::ETC, "목검", "다수 적 대미지", Status(0, 0, 50), 100);
+	}
+	Item GetItem(int idx)
+	{
+		return m_listItems[idx];
+	}
+};
 
 class Player {
 	string m_strName;
@@ -130,6 +152,11 @@ public:
 		this->m_nExp = target.m_nLv * 100 + target.m_nExp;
 	}
 
+	void StillItem(Player& target, int idx = 0)
+	{
+		SetIventory(target.GetIventoryIdx(idx));
+	}
+
 	bool LvUp()
 	{
 		//만약 경험치가 100 이상되면, 레벨+1, 모든 능력치 10증가, 경험치 초기화.
@@ -154,6 +181,9 @@ public:
 	{
 		cout << "######### " << m_strName << "######### " << endl;
 		m_sStatus.Show();
+		cout << "######### Inventory ######### " << endl;
+		for (int i = 0; i < m_listIventory.size(); i++)
+			cout << i << ":" << m_listIventory[i].strName << endl;
 	}
 };
 
@@ -161,10 +191,11 @@ void main()
 {
 	Player cPlayer("Player");
 	Player cMonster("Monster");
-
+	ItemManager cItemManager;
 	//몬스터의 인벤토리에 포션을 추가하고, 
-	//몬스터를 잡으면, 포션을 획득한다.
-	//(몬스터의 첫번째 인벤토리에서 아이템을 뺏어온다.)
+	//Item cHpPotion = Item(Item::E_ITEM_KIND::ETC, "HP포션", "HP회복", Status(100), 100);
+	Item cHpPotion = cItemManager.GetItem(ItemManager::E_ITEM_LIST::HP_POTION);
+	cMonster.SetIventory(cHpPotion);
 
 	while (!cPlayer.Dead() && !cMonster.Dead())//둘중하나가 죽었을때 전투가 종료된다. -> 둘다 살아있으면 전투를한다.
 	{
@@ -188,10 +219,11 @@ void main()
 			cMonster.Attack(cPlayer);
 			cPlayer.Show();
 		}
-		else
+		else//몬스터를 잡으면, 포션을 획득한다.(몬스터의 첫번째 인벤토리에서 아이템을 뺏어온다.)
 		{
 			cout << "Player Win !!" << endl;
 			cPlayer.StillExp(cMonster);
+			cPlayer.StillItem(cMonster);
 			if (cPlayer.LvUp())
 				cout << "Lv Up!!" << endl;
 			cPlayer.Show();
