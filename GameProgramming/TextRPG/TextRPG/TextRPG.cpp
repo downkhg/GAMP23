@@ -85,6 +85,11 @@ public:
 	enum E_ITEM_LIST { WOOD_SOWRD, BONE_SOWRD, WOOD_ARMOR, BONE_AMROR, WOOD_RING, BONE_RING, HP_POTION, MP_POTION, STONE, BOOM };
 	ItemManager()
 	{
+		
+	}
+
+	void Init()
+	{
 		m_listItems.resize(10);
 		m_listItems[0] = Item(Item::E_ITEM_KIND::WEAPON, "목검", "데미지 증가", Status(0, 0, 10), 100);
 		m_listItems[1] = Item(Item::E_ITEM_KIND::WEAPON, "본소드", "데미지 증가", Status(0, 0, 20), 100);
@@ -97,6 +102,65 @@ public:
 		m_listItems[8] = Item(Item::E_ITEM_KIND::ETC, "짱돌", "단일 적 대미지", Status(0, 0, 50), 100);
 		m_listItems[9] = Item(Item::E_ITEM_KIND::ETC, "목검", "다수 적 대미지", Status(0, 0, 50), 100);
 	}
+
+	void SaveFile()
+	{
+		FILE* pFile = fopen("itemdatabase.csv", "wt");
+		if (pFile)
+		{
+			fprintf(pFile, "%d\n", m_listItems.size());
+			vector<Item>::iterator it = m_listItems.begin();
+			for (; it != m_listItems.end(); it++)
+			{
+				Item sItem = *(it);
+				fprintf(pFile, "%d,%s,%s,%d,%d,%d,%d,%d\n", sItem.eItemKind, sItem.strName.c_str(), sItem.strComment.c_str(), sItem.nGold,
+					sItem.sFuction.nHP, sItem.sFuction.nMP, sItem.sFuction.nStr, sItem.sFuction.nInt, sItem.sFuction.nDef);
+			}
+			fclose(pFile);
+		}
+		else
+			cout << " Save Failed!" << endl;
+	}
+
+	void LoadFile()
+	{
+		FILE* pFile = fopen("itemdatabase.csv", "rt");
+		if (pFile)
+		{
+			int nSize;
+			fscanf(pFile, "%d", &nSize);
+
+			for (int i = 0; i < nSize; i++)
+			{
+				char strTemp[1024];
+				fscanf(pFile, "%s\n", strTemp);
+				cout << strTemp << endl;
+				char  arrStrs[8][128];
+				char* strTemps = strtok(strTemp, ",");
+				int idx = 0;
+				while (strTemps != NULL)
+				{
+					//memcpy(arrStrs[idx], strTemps, 128);
+					strcpy(arrStrs[idx], strTemps);
+					cout << arrStrs[idx] << ",";
+					//cout << strTemps << ",";
+					strTemps = strtok(NULL, ",");
+					idx++;
+				}
+				cout << endl;
+				string name = arrStrs[1];
+				string info = arrStrs[2];
+				Item sItem((Item::E_ITEM_KIND)atoi(arrStrs[0]), name, info,
+					Status(atoi(arrStrs[4]), atoi(arrStrs[5]), atoi(arrStrs[6]), atoi(arrStrs[7])),
+					atoi(arrStrs[3]));
+				m_listItems.push_back(sItem);
+			}
+			fclose(pFile);
+		}
+		else
+			cout << " Save Failed!" << endl;
+	}
+
 	Item GetItem(int idx)
 	{
 		return m_listItems[idx];
@@ -249,6 +313,11 @@ void main()
 	int eStage = E_STAGE::CRATE;
 
 	ItemManager cItemManager;
+
+	//cItemManager.Init();
+	//cItemManager.SaveFile();
+	cItemManager.LoadFile();
+
 	Player cPlayer;
 	Player cMonster;
 	Player cShop;
