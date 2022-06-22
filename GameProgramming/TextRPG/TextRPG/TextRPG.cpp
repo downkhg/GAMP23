@@ -108,6 +108,7 @@ class Player {
 	Status m_sStatus;
 	int m_nLv;
 	int m_nExp;
+	int m_nGold;
 
 	vector<Item> m_listIventory;
 	vector<Item> m_listEqument;
@@ -125,11 +126,10 @@ public:
 		m_listIventory.erase(m_listIventory.begin() + idx);
 	}
 public:
-	Player(string strName = "none", int _hp = 100, int _mp = 100, int _str = 20, int _int = 10, int _def = 10, int _exp = 0)
+	Player(string strName = "none", int _gold = 0, int _hp = 100, int _mp = 100, int _str = 20, int _int = 10, int _def = 10, int _exp = 0)
 	{
-		Set(strName, _hp, _mp, _str, _int, _def, _exp);
+		Set(strName, _hp, _mp, _str, _int, _def, _exp, _gold);
 	}
-
 
 	bool UseItem(int idx)
 	{
@@ -153,7 +153,7 @@ public:
 		SetIventory(cItem);
 	}
 
-	void Set(string strName, int _hp, int _mp, int _str, int _int, int _def, int _exp)
+	void Set(string strName, int _gold, int _hp, int _mp, int _str, int _int, int _def, int _exp)
 	{
 		m_strName = strName;
 		m_sStatus.nHP = _hp;
@@ -163,6 +163,7 @@ public:
 		m_sStatus.nDef = _def;
 		m_nExp = _exp;
 		m_nLv = 1;
+		m_nGold = _gold;
 
 		m_listEqument.resize(3);
 	}
@@ -181,6 +182,25 @@ public:
 	void StillItem(Player& target, int idx = 0)
 	{
 		SetIventory(target.GetIventoryIdx(idx));
+	}
+
+	bool Buy(Player& target, int idx)
+	{
+		Item item = target.GetIventoryIdx(idx);
+		if (item.nGold <= m_nGold)
+		{
+			SetIventory(item);
+			m_nGold -= item.nGold;
+			return true;
+		}
+		return false;
+	}
+
+	void Sell(int idx)
+	{
+		Item item = GetIventoryIdx(idx);
+		DeleteIventory(idx);
+		m_nGold += item.nGold;
 	}
 
 	bool LvUp()
@@ -213,13 +233,14 @@ public:
 		cout << "######### Equiment ######### " << endl;
 		for (int i = 0; i < m_listEqument.size(); i++)
 			cout << i << ":" << m_listEqument[i].strName << endl;
+		cout << "######### Gold:" << m_nGold << " ######### " << endl;
 	}
 };
 
 void main()
 {
-	enum E_STAGE { EXIT = -1, CRATE, IVENTORY, TOWN, FILED, BATTLE, GAME_OVER, THE_END, MAX };
-	const char* strStageName[] = { "CRATE", "INVENTORY","TOWN", "FILED", "BATTLE", "GAME_OVER", "THE_END" };
+	enum E_STAGE { EXIT = -1, CRATE, IVENTORY, SHOP, TOWN, FILED, BATTLE, GAME_OVER, THE_END, MAX };
+	const char* strStageName[] = { "CRATE", "INVENTORY","SHOP","TOWN", "FILED", "BATTLE", "GAME_OVER", "THE_END" };
 
 	enum E_MONSTER { SILME, SKELETON, BOSS, MON_MAX };
 
@@ -230,12 +251,24 @@ void main()
 	ItemManager cItemManager;
 	Player cPlayer;
 	Player cMonster;
+	Player cShop;
+
+	cShop.SetIventory(cItemManager.GetItem(ItemManager::E_ITEM_LIST::WOOD_SOWRD));
+	cShop.SetIventory(cItemManager.GetItem(ItemManager::E_ITEM_LIST::WOOD_ARMOR));
+	cShop.SetIventory(cItemManager.GetItem(ItemManager::E_ITEM_LIST::WOOD_RING));
+	cShop.SetIventory(cItemManager.GetItem(ItemManager::E_ITEM_LIST::BONE_SOWRD));
+	cShop.SetIventory(cItemManager.GetItem(ItemManager::E_ITEM_LIST::BONE_AMROR));
+	cShop.SetIventory(cItemManager.GetItem(ItemManager::E_ITEM_LIST::BONE_RING));
+	cShop.SetIventory(cItemManager.GetItem(ItemManager::E_ITEM_LIST::HP_POTION));
+	cShop.SetIventory(cItemManager.GetItem(ItemManager::E_ITEM_LIST::MP_POTION));
+	cShop.SetIventory(cItemManager.GetItem(ItemManager::E_ITEM_LIST::STONE));
+	cShop.SetIventory(cItemManager.GetItem(ItemManager::E_ITEM_LIST::BOOM));
 
 	cPlayer.SetIventory(cItemManager.GetItem(ItemManager::E_ITEM_LIST::WOOD_SOWRD));
 	cPlayer.SetIventory(cItemManager.GetItem(ItemManager::E_ITEM_LIST::WOOD_ARMOR));
 	cPlayer.SetIventory(cItemManager.GetItem(ItemManager::E_ITEM_LIST::WOOD_RING));
 
-	cMonster.Set("Slime", 100, 100, 20, 10, 10, 100);
+	cMonster.Set("Slime",0, 100, 100, 20, 10, 10, 100);
 	cMonster.SetIventory(cItemManager.GetItem(ItemManager::E_ITEM_LIST::WOOD_SOWRD));
 	//cMonster.SetIventory(Item(Item::E_ITEM_KIND::WEAPON, "목검", "데미지 증가", Status(0, 0, 10), 100));
 
@@ -248,7 +281,7 @@ void main()
 			string name;
 			cout << "케릭터 이름을 입력하세요!:";
 			cin >> name;
-			cPlayer.Set(name, 100, 100, 20, 10, 10, 0);
+			cPlayer.Set(name, 999999, 100, 100, 20, 10, 10, 0);
 			eStage = E_STAGE::TOWN;
 		}
 		break;
@@ -275,6 +308,44 @@ void main()
 			else
 				eStage = E_STAGE::TOWN;
 		}
+		case E_STAGE::SHOP:
+		{
+			cShop.Show();
+			int nInput;
+			cout << "상점입니다. 무엇을 하시겠습니까? 1: 구매, 2: 팔기, etc:마을";
+			cin >> nInput;
+			switch (nInput)
+			{
+			case 1:
+			{
+				cout << "구매할 아이템을 목록에서 선택하세요! -1:마을";
+				cin >> nInput;
+				if (nInput != -1)
+					cPlayer.Buy(cShop, nInput);
+				else
+					eStage = E_STAGE::TOWN;
+			}
+			break;
+			case 2:
+			{
+				cPlayer.Show();
+				cout << "판매할 아이템을 목록에서 선택하세요! -1:마을";
+				cin >> nInput;
+				if (nInput != -1)
+					cPlayer.Sell(nInput);
+				else
+					eStage = E_STAGE::TOWN;
+			}
+			break;
+			default:
+			{
+				eStage = E_STAGE::TOWN;
+			}
+			break;
+			}
+
+		}
+		break;
 		case E_STAGE::TOWN:
 		{
 			cout << "마을 입니다." << endl;
@@ -294,13 +365,13 @@ void main()
 			switch (nSelect)
 			{
 			case E_MONSTER::SILME:
-				cMonster.Set("Slime", 100, 100, 20, 10, 10, 100);
+				cMonster.Set("Slime", 0,100, 100, 20, 10, 10, 100);
 				break;
 			case E_MONSTER::SKELETON:
-				cMonster.Set("Skeleton", 200, 200, 30, 10, 10, 100);
+				cMonster.Set("Skeleton",0, 200, 200, 30, 10, 10, 100);
 				break;
 			case E_MONSTER::BOSS:
-				cMonster.Set("Boss", 300, 100, 50, 10, 10, 100);
+				cMonster.Set("Boss",0, 300, 100, 50, 10, 10, 100);
 				break;
 			}
 			eStage = E_STAGE::BATTLE;
