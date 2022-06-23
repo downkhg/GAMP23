@@ -91,16 +91,17 @@ public:
 	void Init()
 	{
 		m_listItems.resize(10);
-		m_listItems[0] = Item(Item::E_ITEM_KIND::WEAPON, "목검", "데미지 증가", Status(0, 0, 10), 100);
-		m_listItems[1] = Item(Item::E_ITEM_KIND::WEAPON, "본소드", "데미지 증가", Status(0, 0, 20), 100);
-		m_listItems[2] = Item(Item::E_ITEM_KIND::ARMOR, "나무갑옷", "방어력 증가", Status(0, 0, 0, 10), 100);
-		m_listItems[3] = Item(Item::E_ITEM_KIND::ARMOR, "본아머", "방어력 증가", Status(0, 0, 20), 100);
-		m_listItems[4] = Item(Item::E_ITEM_KIND::ACC, "나무반지", "체력 증가", Status(10), 100);
-		m_listItems[5] = Item(Item::E_ITEM_KIND::ACC, "해골반지", "체력 증가", Status(20), 100);
+		m_listItems[0] = Item(Item::E_ITEM_KIND::WEAPON, "목검", "데미지_증가", Status(0, 0, 10), 100);
+		m_listItems[1] = Item(Item::E_ITEM_KIND::WEAPON, "본소드", "데미지_증가", Status(0, 0, 20), 100);
+		m_listItems[2] = Item(Item::E_ITEM_KIND::ARMOR, "나무갑옷", "방어력_증가", Status(0, 0, 0, 10), 100);
+		m_listItems[3] = Item(Item::E_ITEM_KIND::ARMOR, "본아머", "방어력_증가", Status(0, 0, 20), 100);
+		m_listItems[4] = Item(Item::E_ITEM_KIND::ACC, "나무반지", "체력_증가", Status(10), 100);
+		m_listItems[5] = Item(Item::E_ITEM_KIND::ACC, "해골반지", "체력_증가", Status(20), 100);
 		m_listItems[6] = Item(Item::E_ITEM_KIND::ETC, "힐링포션", "HP회복", Status(100), 100);
 		m_listItems[7] = Item(Item::E_ITEM_KIND::ETC, "마나포션", "MP회복", Status(0, 100), 100);
-		m_listItems[8] = Item(Item::E_ITEM_KIND::ETC, "짱돌", "단일 적 대미지", Status(0, 0, 50), 100);
-		m_listItems[9] = Item(Item::E_ITEM_KIND::ETC, "목검", "다수 적 대미지", Status(0, 0, 50), 100);
+		m_listItems[8] = Item(Item::E_ITEM_KIND::ETC, "짱돌", "단일_적_대미지", Status(0, 0, 50), 100);
+		m_listItems[9] = Item(Item::E_ITEM_KIND::ETC, "목검", "다수_적_대미지", Status(0, 0, 50), 100);
+		cout << "Init Items:" << m_listItems.size() << endl;
 	}
 
 	void SaveFile()
@@ -108,15 +109,22 @@ public:
 		FILE* pFile = fopen("itemdatabase.csv", "wt");
 		if (pFile)
 		{
-			fprintf(pFile, "%d\n", m_listItems.size());
-			vector<Item>::iterator it = m_listItems.begin();
-			for (; it != m_listItems.end(); it++)
+			if (m_listItems.empty() == false)
 			{
-				Item sItem = *(it);
-				fprintf(pFile, "%d,%s,%s,%d,%d,%d,%d,%d\n", sItem.eItemKind, sItem.strName.c_str(), sItem.strComment.c_str(), sItem.nGold,
-					sItem.sFuction.nHP, sItem.sFuction.nMP, sItem.sFuction.nStr, sItem.sFuction.nInt, sItem.sFuction.nDef);
+				fprintf(pFile, "%d\n", m_listItems.size());
+				vector<Item>::iterator it = m_listItems.begin();
+				for (; it != m_listItems.end(); it++)
+				{
+					Item sItem = *(it);
+					fprintf(pFile, "%d,%s,%s,%d,%d,%d,%d,%d,%d\n", sItem.eItemKind, sItem.strName.c_str(), sItem.strComment.c_str(), sItem.nGold,
+						sItem.sFuction.nHP, sItem.sFuction.nMP, sItem.sFuction.nStr, sItem.sFuction.nInt, sItem.sFuction.nDef);
+				}
+				fclose(pFile);
 			}
-			fclose(pFile);
+			else
+			{
+				cout << "Item is Empty!!"<<m_listItems.size() << endl;
+			}
 		}
 		else
 			cout << " Save Failed!" << endl;
@@ -158,7 +166,7 @@ public:
 			fclose(pFile);
 		}
 		else
-			cout << " Save Failed!" << endl;
+			cout << " Load Failed!" << endl;
 	}
 
 	Item* GetItem(int idx)
@@ -325,14 +333,15 @@ void main()
 	ItemManager cItemManager;
 
 	//cItemManager.Init();
-	//cItemManager.SaveFile();
-	cItemManager.LoadFile();
+	cItemManager.SaveFile();
+	//cItemManager.LoadFile();
 
 	Player cPlayer("unkown",9999999);
 	Player cMonster;
 	Player cShop("Shop",99999999);
 
-	cShop.SetIventory(cItemManager.GetItem(ItemManager::E_ITEM_LIST::WOOD_SOWRD));
+	Item* pItem = cItemManager.GetItem(ItemManager::E_ITEM_LIST::WOOD_SOWRD);
+	cShop.SetIventory(pItem);
 	cShop.SetIventory(cItemManager.GetItem(ItemManager::E_ITEM_LIST::WOOD_ARMOR));
 	cShop.SetIventory(cItemManager.GetItem(ItemManager::E_ITEM_LIST::WOOD_RING));
 	cShop.SetIventory(cItemManager.GetItem(ItemManager::E_ITEM_LIST::BONE_SOWRD));
