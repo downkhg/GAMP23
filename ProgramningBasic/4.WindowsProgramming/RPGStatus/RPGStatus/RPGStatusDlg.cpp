@@ -169,7 +169,7 @@ void CRPGStatusDlg::OnDeltaposSpinHp(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	
+	Player& player = m_cGameManager.GetPlayer();
 	if (pNMUpDown->iDelta == -1)//up
 	{
 		m_nBonus--;
@@ -180,6 +180,9 @@ void CRPGStatusDlg::OnDeltaposSpinHp(NMHDR* pNMHDR, LRESULT* pResult)
 		m_nBonus++;
 		m_nHP--;
 	}
+	Status status = player.GetStatus();
+	status.nHP = m_nHP;
+	player.SetStatus(status);
 
 	SyncStateNBonus(m_nHP, m_nBonus, m_editHP, m_staticBonus);
 

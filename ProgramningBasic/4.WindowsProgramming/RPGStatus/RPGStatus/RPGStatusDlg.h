@@ -39,4 +39,6 @@ public:
 
 	int m_nHP = 10;
 	int m_nBonus = 20;
+
+	GameManager m_cGameManager;
 };
