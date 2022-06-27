@@ -180,9 +180,12 @@ void CRPGStatusDlg::OnDeltaposSpinHp(NMHDR* pNMHDR, LRESULT* pResult)
 		m_nBonus++;
 		m_nHP--;
 	}
-	Status status = player.GetStatus();
-	status.nHP = m_nHP;
-	player.SetStatus(status);
+	////원본이 복사되어 전달되므로, 값을 변경하위해서는 변경된 메모리르 통째로 복사해야한다.
+	//Status status = player.GetStatus();
+	//status.nHP = m_nHP;
+	//player.SetStatus(status);
+	//객체를 참조하여 원본의 값을 변경할수있다.
+	player.GetStatus()->nHP = m_nHP;
 
 	SyncStateNBonus(m_nHP, m_nBonus, m_editHP, m_staticBonus);
 

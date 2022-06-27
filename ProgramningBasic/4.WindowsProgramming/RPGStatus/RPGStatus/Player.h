@@ -16,10 +16,10 @@ class Player {
 	vector<Item*> m_listIventory;
 	vector<Item*> m_listEqument;
 public:
-	Status GetStatus() { return m_sStatus; }
-	void SetStatus(Status status) { m_sStatus = status; }
+	//Status GetStatus() { return m_sStatus; }
+	//void SetStatus(Status status) { m_sStatus = status; }
 
-	//Status& GetStatus() { return m_sStatus; }
+	Status* GetStatus() { return &m_sStatus; }
 
 	void SetIventory(Item* item);
 	Item* GetIventoryIdx(int idx);
