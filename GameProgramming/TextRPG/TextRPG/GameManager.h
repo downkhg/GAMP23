@@ -1,12 +1,10 @@
 #pragma once
-#include <iostream>
-#include <string>
-#include <vector>
-
-#include "Item.h"
-#include "Player.h"
+//#include "Player.h"
 
 using namespace std;
+
+class Player;
+class ItemManager;
 
 class GameManager
 {
@@ -16,6 +14,7 @@ public:
 	int GetStage() { return eStage; }
 
 	void init();
+	void Release();
 	void EventCreate();
 	void EventInventory();
 	void EventShop();
@@ -28,15 +27,15 @@ public:
 private:
 	int eStage = E_STAGE::CRATE;
 
-	ItemManager cItemManager;
+	ItemManager* m_pItemManager;
 
-	Player cPlayer = Player("unkown", 9999999);
-	Player cMonster;
-	Player cShop = Player("Shop", 99999999);
+	Player* m_pPlayer;
+	Player* m_pMonster;
+	Player* m_pShop;
 public:
 	//값에의한호출
-	Player GetPlayer() { return cPlayer; }
-	void SetPlayer(Player player) { cPlayer = player; }
+	Player* GetPlayer() { return m_pPlayer; }
+	void SetPlayer(Player* player) { m_pPlayer = player; }
 	//참조에의한호출
-	//Player& GetPlayer() { return cPlayer; }
+	//Player& GetPlayer() { return m_pPlayer; }
 };

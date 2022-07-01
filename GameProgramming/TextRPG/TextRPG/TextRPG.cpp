@@ -16,4 +16,6 @@ void main()
 	{
 		cGameManager.Update();
 	}
+
+	cGameManager.Release();
 }
