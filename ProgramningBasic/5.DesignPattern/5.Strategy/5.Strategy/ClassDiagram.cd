@@ -17,7 +17,7 @@
   <Class Name="Player" Collapsed="true">
     <Position X="7.25" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>DAJAEEQAAAAARQAAUFIAAAEAAIAEAAAAAAAACQAAQAA=</HashCode>
+      <HashCode>jAJAEEQAAAAARQAAUFIAAAEAAIAEAAAAAAAACQAAQAA=</HashCode>
       <FileName>5.Strategy.cpp</FileName>
     </TypeIdentifier>
   </Class>
@@ -28,36 +28,36 @@
       <FileName>5.Strategy.cpp</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Hill" Collapsed="true">
+  <Class Name="Hill">
     <Position X="0.75" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
       <FileName>5.Strategy.cpp</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Slash" Collapsed="true">
+  <Class Name="Slash">
     <Position X="3" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
       <FileName>5.Strategy.cpp</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Skill" Collapsed="true">
-    <Position X="2" Y="1.25" Width="1.5" />
+  <Class Name="Skill">
+    <Position X="2.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAIAAAAQAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>5.Strategy.cpp</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="DrainSlash" Collapsed="true">
-    <Position X="0.75" Y="2.5" Width="1.5" />
+  <Class Name="DrainSlash">
+    <Position X="0.75" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>5.Strategy.cpp</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="EffectSlash" Collapsed="true">
-    <Position X="3" Y="2.5" Width="1.5" />
+    <Position X="3.5" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>5.Strategy.cpp</FileName>
@@ -66,7 +66,7 @@
   <Class Name="GameManager" Collapsed="true">
     <Position X="5.5" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QAQgCAAAgAABgAAAAAAEIAAAAAAAAIAAAAAKAAAAAAA=</HashCode>
+      <HashCode>QARgAAAAAAAAgAAAAAAEIAAAAAAAAAAAAAAKAAAAAAA=</HashCode>
       <FileName>5.Strategy.cpp</FileName>
     </TypeIdentifier>
   </Class>

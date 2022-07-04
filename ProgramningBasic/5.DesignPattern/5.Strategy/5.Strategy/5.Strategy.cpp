@@ -195,6 +195,11 @@ public:
 		m_listIventory.erase(m_listIventory.begin() + idx);
 	}
 
+	void AddSkill(Skill* skill)
+	{
+
+	}
+	
 	bool UseItem(int idx)
 	{
 		Item* pItem = GetIventoryIdx(idx);
